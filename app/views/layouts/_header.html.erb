@@ -1,0 +1,16 @@
+ここはヘッダー
+<h1>
+  <li><%= link_to "FSC",    root_path %></li>
+</h1>
+<nav class="pc-nav">
+  <ul>
+    <li><%= link_to "ホーム",    root_path %></li>
+    <li><%= link_to "ヘルプ",    root_path %></li>
+    <li><%= link_to "ログイン",    root_path %></li>
+    <li><%= link_to "プロフィール" ,    root_path%></li>
+    <li><%= link_to "ユーザー一覧",    root_path %></li>
+    <li><%= link_to "ユーザー登録",    root_path %></li>
+    <li><%= link_to "ユーザー編集",    root_path %></li>
+    <li><%= link_to "ログアウト" ,      destroy_user_session_path ,method: :delete%></li>
+  </ul>
+</nav>
