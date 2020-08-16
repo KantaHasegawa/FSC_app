@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :name, presence: true, length: { maximum: 50 }, uniqueness: true
-  validates :sex, presence: true, numericality: { less_than_or_equal_to: 1 }
+  validates :gender, presence: true, numericality: { less_than_or_equal_to: 1 }
   validates :generation, presence: true
 
   # メソッド
