@@ -3,10 +3,12 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
-
   validates :name, presence: true, length: { maximum: 50 }, uniqueness: true
   validates :gender, presence: true, numericality: { less_than_or_equal_to: 1 }
   validates :generation, presence: true
+
+  has_many :relationships
+  has_many :bands, through: :relationships
 
   # メソッド
   # 渡されたユーザーの性別を文字列で返す
