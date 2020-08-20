@@ -5,15 +5,15 @@
 
 
   <div class="field">
-    <%= f.label :generation , "代"%><br />
+    <%= f.label :generation , "代"%>(*例 2019年入部 => 50代 2020年入部 => 51代)<br />
     <%= f.number_field :generation ,autofocus: true %>
   </div>
 
   <%= f.label :gender , "性別"%>
   <%= f.radio_button :gender, 0 %>男 <%= f.radio_button :gender, 1 %>女
-
+<p></p>
   <div class="field">
-    <%= f.label :name , "名前"%><br />
+    <%= f.label :name , "名前"%>(あだ名ではなくフルネームをスペース無しで入力してください *例 "長谷川寛拓")<br />
     <%= f.text_field :name %>
   </div>
 
@@ -26,11 +26,8 @@
 
 
   <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.label :password %> (半角英数字6以上)<br>
+    <%= f.password_field :password, autocomplete: "new-password" %> <br>
   </div>
 
   <div class="field">

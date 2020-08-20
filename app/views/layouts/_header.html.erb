@@ -8,8 +8,8 @@
     <li><%= link_to "ヘルプ",     static_pages_help_path %></li>
     <%if user_signed_in? %>
       <li><%= link_to "プロフィール" ,    current_user %></li>
-      <li><%= link_to "ユーザー一覧",    users_path %></li>
-      <li><%= link_to "ユーザー編集",      edit_user_registration_path %></li>
+      <li><%= link_to "部員一同",    users_path %></li>
+      <li><%= link_to "バンド一覧",    bands_path %></li>
       <li><%= link_to "ログアウト" ,      destroy_user_session_path ,method: :delete%></li>
     <%else %>
       <li><%= link_to "ログイン",     new_user_session_path %></li>

@@ -1,3 +1,10 @@
-<body>
-<%= @user.name %> <%= @user.what_gender %>  <%= "#{@user.generation}代" %>
-</body>
+<h1>プロフィール</h1>
+<%= "名前 #{@user.name}" %> <br>
+<%= "性別 #{@user.what_gender}" %> <br>
+<%= "#{@user.generation}代" %> <br>
+<%= "持ちバンド #{@user.bands.count}" %> <br>
+ <% if @user == current_user %>
+   <%="メールアドレス #{@user.email}" %>
+<p></p>
+<%= link_to "ユーザー情報を編集する",      edit_user_registration_path %>
+  <% end %>

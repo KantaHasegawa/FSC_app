@@ -3,11 +3,13 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
+  VALID_PASSWORD_REGEX = /\A[a-z0-9]+\z/i
+  validates :password, format: { with: VALID_PASSWORD_REGEX }
   validates :name, presence: true, length: { maximum: 50 }, uniqueness: true
   validates :gender, presence: true, numericality: { less_than_or_equal_to: 1 }
   validates :generation, presence: true
 
-  has_many :relationships
+  has_many :relationships,dependent: :destroy
   has_many :bands, through: :relationships
 
   # メソッド
