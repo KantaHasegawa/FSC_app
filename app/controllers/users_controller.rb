@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def index
-    @users = User.paginate(page: params[:page])
+    @q = User.paginate(page: params[:page]).ransack(params[:q])
+    @users = @q.result(distinct: true)
   end
 
   def show

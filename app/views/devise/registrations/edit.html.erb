@@ -4,10 +4,11 @@
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.label :generation , "代"%>(*例 2019年入部 => 50代 2020年入部 => 51代)<br />
+    <%= f.label :generation , "代"%> <br>
+    (*例 2019年入部 => 50代 2020年入部 => 51代)<br />
     <%= f.number_field :generation ,autofocus: true %>
   </div>
-
+<p></p>
   <%= f.label :gender , "性別"%>
   <%= f.radio_button :gender, 0 %>男 <%= f.radio_button :gender, 1 %>女
 <p></p>
@@ -26,7 +27,8 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :password,"パスワード(半角英数字6以上)" %> <i>(変更しない場合は現在のパスワードを入力してください)</i><br />
+    <%= f.label :password,"パスワード(半角英数字6以上)" %> <br>
+    (変更しない場合は現在のパスワードを入力してください)<br />
     <%= f.password_field :password, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
       <br />

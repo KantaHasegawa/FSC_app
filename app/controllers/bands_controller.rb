@@ -1,6 +1,8 @@
 class BandsController < ApplicationController
   def index
-    @bands = Band.paginate(page: params[:page])
+    @q = Band.paginate(page: params[:page]).ransack(params[:q])
+    @collections = User.pluck(:name, :id).unshift(['募集中', 0])
+    @bands = @q.result.includes(:users, :relationships).distinct(:true)
   end
 
   def new
