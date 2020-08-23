@@ -9,30 +9,10 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-  <header class="navbar navbar-fixed-top navbar-inverse">
-    <div class="container">
-       <%= link_to "FSCapp", root_path, id: "logo" %>
-      <nav>
-        <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to "ホーム",   root_path %></li>
-          <li><%= link_to "ヘルプ",   static_pages_help_path %></li>
-          <%if user_signed_in? %>
-            <li><%= link_to "プロフィール" ,    current_user %></li>
-            <li><%= link_to "部員",    users_path %></li>
-            <li><%= link_to "バンド",    bands_path %></li>
-            <li><%= link_to "ログアウト" ,      destroy_user_session_path ,method: :delete%></li>
-          <%else %>
-            <li><%= link_to "ログイン",     new_user_session_path %></li>
-            <li><%= link_to "ユーザー登録",     new_user_registration_path %></li>
-          <%end %>
-            </ul>
-      </nav>
-    </div>
-  </header>
+  <%= render 'layouts/header' %>
   <br>
+  <%= render 'layouts/flashes' %>
   <div class="container">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
     <%= yield %>
   </div>
   </body>

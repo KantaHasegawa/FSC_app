@@ -6,5 +6,5 @@
  <% if @user == current_user %>
    <%="メールアドレス #{@user.email}" %>
 <p></p>
-<%= link_to "ユーザー情報を編集する",      edit_user_registration_path %>
+<%= link_to "ユーザー情報を編集する",      edit_user_registration_path, class: "btn btn-primary" %>
   <% end %>

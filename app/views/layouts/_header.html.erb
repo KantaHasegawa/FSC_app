@@ -1,19 +1,20 @@
-ここはヘッダー
-<h1>
-  <li><%= link_to "FSC",    root_path %></li>
-</h1>
-<nav class="pc-nav">
-  <ul>
-    <li><%= link_to "ホーム",    root_path %></li>
-    <li><%= link_to "ヘルプ",     static_pages_help_path %></li>
-    <%if user_signed_in? %>
-      <li><%= link_to "プロフィール" ,    current_user %></li>
-      <li><%= link_to "部員一同",    users_path %></li>
-      <li><%= link_to "バンド一覧",    bands_path %></li>
-      <li><%= link_to "ログアウト" ,      destroy_user_session_path ,method: :delete%></li>
-    <%else %>
-      <li><%= link_to "ログイン",     new_user_session_path %></li>
-      <li><%= link_to "ユーザー登録",     new_user_registration_path %></li>
-    <%  end %>
-  </ul>
-</nav>
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <a class="navbar-brand" href="/"></a>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "ホーム",   root_path %></li>
+        <li><%= link_to "ヘルプ",   static_pages_help_path %></li>
+        <%if user_signed_in? %>
+          <li><%= link_to "プロフィール" ,    current_user %></li>
+          <li><%= link_to "部員",    users_path %></li>
+          <li><%= link_to "バンド",    bands_path %></li>
+          <li><%= link_to "ログアウト" ,      destroy_user_session_path ,method: :delete%></li>
+        <%else %>
+          <li><%= link_to "ログイン",     new_user_session_path %></li>
+          <li><%= link_to "ユーザー登録",     new_user_registration_path %></li>
+        <%end %>
+      </ul>
+    </nav>
+  </div>
+</header>

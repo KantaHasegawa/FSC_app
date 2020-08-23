@@ -1,4 +1,5 @@
 class BandsController < ApplicationController
+  before_action :authenticate_user!
   def index
     @q = Band.paginate(page: params[:page]).ransack(params[:q])
     @collections = User.pluck(:name, :id).unshift(['募集中', 0])
@@ -18,7 +19,7 @@ class BandsController < ApplicationController
       flash[:notice] = "バンドの登録に成功しました"
     else
       flash[:notice] = "バンドの登録に失敗しました"
-      render 'bands/new'
+      redirect_to new_band_path
     end
   end
 
