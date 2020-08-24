@@ -1,3 +1,0 @@
-$(function () {
-    $('#animal').select2();
-});

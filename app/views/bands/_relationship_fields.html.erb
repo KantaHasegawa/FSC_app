@@ -3,5 +3,5 @@
   <%= f.collection_select :user_id, @collections, :last, :first %>
   <%=f.label "パート" %>
   <%= f.select :part,[["Vo1","Vo1"],["Vo2","Vo2"],["GtVo","GtVo"],["Gt1","Gt1"],["Gt2","Gt2"],["Ba","Ba"],["Dr","Dr"],["Key","Key"],["その他","その他"]], class: "form-control"%>
-  <%= link_to_remove_association "メンバーを削除", f ,class:"btn btn-danger btn-remove"%>
+  <%= link_to_remove_association "メンバーを削除", f ,class:"btn btn-warning btn-remove"%>
 </div>

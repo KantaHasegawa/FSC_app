@@ -11,6 +11,7 @@ gem 'bcrypt',                     '3.1.13'
 gem 'bootsnap',                   '1.4.6', require: false
 gem 'bootstrap-sass',             '3.4.1'
 gem 'bootstrap-will_paginate',    '1.0.0'
+gem 'cocoon'
 gem 'config'
 gem 'devise'
 gem 'devise-i18n'
@@ -20,13 +21,12 @@ gem 'image_processing', '1.9.3'
 gem 'jbuilder', '2.10.0'
 gem 'mini_magick', '4.9.5'
 gem 'puma', '4.3.5'
+gem 'ransack'
 gem 'sass-rails', '6.0.0'
+gem 'select2-rails'
 gem 'turbolinks', '5.2.1'
 gem 'webpacker', '4.2.2'
 gem 'will_paginate', '3.3.0'
-gem 'cocoon'
-gem 'ransack'
-gem 'select2-rails'
 
 group :development, :test do
   gem 'byebug',  '11.1.3', platforms: %i[mri mingw x64_mingw]
