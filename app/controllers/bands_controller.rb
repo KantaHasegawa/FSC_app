@@ -14,17 +14,23 @@ class BandsController < ApplicationController
 
   def create
     @band = Band.new(band_params)
-    if @band.save
-      redirect_to @band
-      flash[:notice] = 'バンドの登録に成功しました'
-    else
-      flash[:alert] = 'バンドの登録に失敗しました'
-      redirect_to new_band_path
-    end
+       if validate(band_params)
+      if @band.save
+       redirect_to @band
+       flash[:notice] = 'バンドの登録に成功しました'
+      else
+        flash[:alert] = 'バンドの登録に失敗しました(save)'
+        redirect_to new_band_path
+      end
+        else
+         flash[:alert] = 'バンドの登録に失敗しました(validate)'
+           redirect_to new_band_path
+       end
   end
 
   def edit
     @band = Band.find(params[:id])
+    @users = @band.users
     @collections = User.pluck(:name, :id).unshift(['募集中', 0])
   end
 
@@ -59,6 +65,10 @@ class BandsController < ApplicationController
 
   # privateメソッド
   private
+
+  def validate(relations)
+    relations.to_unsafe_h[:relationships_attributes].any?{|k,v| v["user_id"].to_i == current_user.id}
+  end
 
   def band_params
     params.require(:band).permit(
