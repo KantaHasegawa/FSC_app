@@ -1,0 +1,6 @@
+<div class = "nested-fields">
+  <%=f.label "メンバー名" %>
+  <%= f.select :user_id,[ [current_user.name,current_user.id] ]%>
+  <%=f.label "パート" %>
+  <%= f.select :part,[["Vo1","Vo1"],["Vo2","Vo2"],["GtVo","GtVo"],["Gt1","Gt1"],["Gt2","Gt2"],["Ba","Ba"],["Dr","Dr"],["Key","Key"],["その他","その他"]], class: "form-control"%>
+</div>

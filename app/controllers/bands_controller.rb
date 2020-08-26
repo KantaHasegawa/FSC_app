@@ -14,23 +14,24 @@ class BandsController < ApplicationController
 
   def create
     @band = Band.new(band_params)
-       if validate(band_params)
+       if validate_create(band_params)
       if @band.save
        redirect_to @band
        flash[:notice] = 'バンドの登録に成功しました'
       else
-        flash[:alert] = 'バンドの登録に失敗しました(save)'
+        flash[:alert] = 'バンドの登録に失敗しました'
         redirect_to new_band_path
       end
         else
-         flash[:alert] = 'バンドの登録に失敗しました(validate)'
+         flash[:alert] = '作成者は必ずバンドに所属してください'
            redirect_to new_band_path
        end
   end
 
   def edit
     @band = Band.find(params[:id])
-    @users = @band.users
+    @members = @band.users
+    are_you_band_member?
     @collections = User.pluck(:name, :id).unshift(['募集中', 0])
   end
 
@@ -38,8 +39,14 @@ class BandsController < ApplicationController
     @band = Band.find(params[:id])
     @band.update(band_params)
     if @band.save
-      redirect_to @band
-      flash[:notice] = 'バンド情報の編集に成功しました'
+      if @band.users.any?
+        redirect_to @band
+        flash[:notice] = 'バンド情報の編集に成功しました'
+      else
+        @band.delete
+        redirect_to @band
+        flash[:alert] = 'メンバー不在のためバンドを削除しました'
+      end
     else
       redirect_to edit_band_path
       flash[:alert] = 'バンド情報の編集に失敗しました'
@@ -54,6 +61,8 @@ class BandsController < ApplicationController
 
   def destroy
     @band = Band.find(params[:id])
+    @members = @band.users
+    are_you_band_member?
     if @band.delete
       redirect_to bands_path
       flash[:notice] = '削除に成功しました'
@@ -66,9 +75,18 @@ class BandsController < ApplicationController
   # privateメソッド
   private
 
-  def validate(relations)
+  def are_you_band_member?
+    unless  @members.any?{|v| v.id.to_i == 2}
+      redirect_to root_path
+      flash[:alert] = '権限がありません'
+    end
+  end
+
+  def validate_create(relations)
     relations.to_unsafe_h[:relationships_attributes].any?{|k,v| v["user_id"].to_i == current_user.id}
   end
+
+
 
   def band_params
     params.require(:band).permit(
