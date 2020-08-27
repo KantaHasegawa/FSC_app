@@ -31,7 +31,7 @@ class BandsController < ApplicationController
   def edit
     @band = Band.find(params[:id])
     @members = @band.users
-    are_you_band_member?
+    are_you_member?
     @collections = User.pluck(:name, :id).unshift(['募集中', 0])
   end
 
@@ -57,12 +57,17 @@ class BandsController < ApplicationController
     @band = Band.find(params[:id])
     @members = @band.users
     @offerings = Relationship.where(user_id: 0, band_id: @band.id)
+    unless @band.users.any?
+      @band.delete
+      redirect_to @band
+      flash[:alert] = 'アカウント削除等の理由によりメンバーが不在になったためバンドを削除しました'
+    end
   end
 
   def destroy
     @band = Band.find(params[:id])
     @members = @band.users
-    are_you_band_member?
+    are_you_member?
     if @band.delete
       redirect_to bands_path
       flash[:notice] = '削除に成功しました'
@@ -75,8 +80,8 @@ class BandsController < ApplicationController
   # privateメソッド
   private
 
-  def are_you_band_member?
-    unless  @members.any?{|v| v.id.to_i == 2}
+  def are_you_member?
+    unless  @members.any?{|v| v.id.to_i == current_user.id}
       redirect_to root_path
       flash[:alert] = '権限がありません'
     end
