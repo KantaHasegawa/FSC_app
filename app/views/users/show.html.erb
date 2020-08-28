@@ -1,10 +1,29 @@
 <h1>プロフィール</h1>
+<%= link_to "ユーザー情報を編集する",      edit_user_registration_path, class: "btn btn-primary" %> <br>
+<p></p>
 <%= "名前 #{@user.name}" %> <br>
 <%= "性別 #{@user.what_gender}" %> <br>
 <%= "#{@user.generation}代" %> <br>
-<%= "持ちバンド #{@user.bands.count}" %> <br>
  <% if @user == current_user %>
    <%="メールアドレス #{@user.email}" %>
-<p></p>
-<%= link_to "ユーザー情報を編集する",      edit_user_registration_path, class: "btn btn-primary" %>
-  <% end %>
+ <%end %>
+<h4><%= "持ちバンド #{@user.bands.count}" %> </h4>
+  <table>
+    <thead>
+    <tr>
+      <th><%= sort_link(@q, :relationships_part, "パート") %></th>
+      <th><%= sort_link(@q, :name, "バンド名") %></th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @bands.each do |band| %>
+      <tr>
+
+        <td width="300"><%=link_to band.name, band%> </td>
+      </tr>
+
+    <% end %>
+    </tbody>
+  </table>

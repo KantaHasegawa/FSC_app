@@ -60,7 +60,7 @@ class BandsController < ApplicationController
     unless @band.users.any?
       @band.delete
       redirect_to @band
-      flash[:alert] = 'アカウント削除等の理由によりメンバーが不在になったためバンドを削除しました'
+      flash[:alert] = '何らかの理由によりメンバーが不在になったためバンドを削除しました'
     end
   end
 
