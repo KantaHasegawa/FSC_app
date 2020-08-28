@@ -66,6 +66,8 @@
     <orderEntry type="library" scope="PROVIDED" name="concurrent-ruby (v1.1.7, rbenv: 2.6.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="config (v2.2.1, rbenv: 2.6.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="crass (v1.0.6, rbenv: 2.6.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="debase (v0.3.0.beta34, rbenv: 2.6.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="debase-ruby_core_source (v0.10.9, rbenv: 2.6.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="debug_inspector (v0.0.3, rbenv: 2.6.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="deep_merge (v1.2.1, rbenv: 2.6.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="devise (v4.7.2, rbenv: 2.6.6) [gem]" level="application" />
@@ -131,6 +133,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rb-inotify (v0.10.1, rbenv: 2.6.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="regexp_parser (v1.7.1, rbenv: 2.6.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="responders (v3.0.1, rbenv: 2.6.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ruby-debug-ide (v0.8.0.beta24, rbenv: 2.6.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby-progressbar (v1.10.1, rbenv: 2.6.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby-vips (v2.0.17, rbenv: 2.6.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubyzip (v2.3.0, rbenv: 2.6.6) [gem]" level="application" />

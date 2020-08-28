@@ -7,8 +7,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    params[:q][:relationships_user_id_eq] = @user.id if params[:q]
-    @q = Band.paginate(page: params[:page]).ransack(params[:q])
+    @q = @user.bands.paginate(page: params[:page]).ransack(params[:q])
     @bands = @q.result.includes(:users, :relationships).distinct(:true)
   end
 end
