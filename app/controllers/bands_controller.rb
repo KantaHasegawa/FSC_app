@@ -1,9 +1,9 @@
 class BandsController < ApplicationController
   before_action :authenticate_user!
   def index
-    @q = Band.paginate(page: params[:page]).ransack(params[:q])
+    @q = Band.ransack(params[:q])
     @collections = User.pluck(:name, :id).unshift(['募集中', 0])
-    @bands = @q.result.includes(:users, :relationships).distinct(:true)
+    @bands = @q.result.includes(:users, :relationships).distinct(:true).kaminari_page(params[:page])
   end
 
   def new
@@ -55,8 +55,8 @@ class BandsController < ApplicationController
 
   def show
     @band = Band.find(params[:id])
-    @members = @band.users
-    @offerings = Relationship.where(user_id: 0, band_id: @band.id)
+    @members = Relationship.where(band_id: @band.id)
+    @users = @band.users
     unless @band.users.any?
       @band.delete
       redirect_to @band

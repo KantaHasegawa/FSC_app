@@ -14,10 +14,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    are_you_true_person?
+    render :edit
+  end
 
   # PUT /resource
   # def update
@@ -49,6 +49,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # protected
+  private
+
+  def are_you_true_person?
+    unless @user.id == current_user.id
+      redirect_to root_path
+      flash[:alert] = "権限がありません"
+    end
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params

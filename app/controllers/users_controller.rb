@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   def index
-    @q = User.paginate(page: params[:page]).ransack(params[:q])
-    @users = @q.result(distinct: true)
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true).kaminari_page(params[:page])
   end
 
   def show
     @user = User.find(params[:id])
-    @q = @user.bands.paginate(page: params[:page]).ransack(params[:q])
-    @bands = @q.result.includes(:users, :relationships).distinct(:true)
+    @q = @user.bands.ransack(params[:q])
+    @bands = @q.result.includes(:users, :relationships).kaminari_page(params[:page]).distinct(:true)
   end
 end

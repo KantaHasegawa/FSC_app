@@ -26,9 +26,10 @@ gem 'sass-rails', '6.0.0'
 gem 'select2-rails'
 gem 'turbolinks', '5.2.1'
 gem 'webpacker', '4.2.2'
-gem 'will_paginate', '3.3.0'
 gem 'ruby-debug-ide'
 gem 'debase'
+gem 'kaminari'
+gem 'rails-i18n'
 
 
 group :development, :test do
