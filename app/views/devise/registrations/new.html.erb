@@ -5,25 +5,35 @@
 
 
   <div class="field">
-    <%= f.label :generation , "代"%>(*例 2019年入部 => 50代 2020年入部 => 51代)<br />
-    <%= f.number_field :generation ,autofocus: true %>
+    <%= f.label :name,"名前" %><br />
+    <%= f.text_field :name, autofocus: true %>
   </div>
 
+  <p></p>
   <%= f.label :gender , "性別"%>
   <%= f.radio_button :gender, 0 %>男 <%= f.radio_button :gender, 1 %>女
-<p></p>
+  <p></p>
+
   <div class="field">
-    <%= f.label :name , "名前"%>(あだ名ではなくフルネームをスペース無しで入力してください *例 "長谷川寛拓")<br />
-    <%= f.text_field :name %>
+    <%= f.label :participated_at , "入部年"%>
+    西暦で入力してください<br>
+    <%= f.number_field :participated_at ,autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%=f.label "メインパート" %> <br>
+    <%= f.select :main_part,[["Vo","Vo"],["Gt","Gt"],["Ba","Ba"],["Dr","Dr"],["Key","Key"]]%>
+  </div>
+
+  <div class="field">
+    <%=f.label "役職" %> <br>
+    <%= f.select :roll,[["平部員","平部員"],["平部長","平部長"],["幹事","幹事"],["会計","会計"],["渉外","渉外"],["機材","機材"],["部長","部長"],["副部長","副部長"],["次期部長","次期部長"],["次期副部長","次期副部長"]]%>
   </div>
 
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autocomplete: "email" %>
   </div>
-
-
-
 
   <div class="field">
     <%= f.label :password %> (半角英数字6以上)<br>
