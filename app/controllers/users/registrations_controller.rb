@@ -14,10 +14,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  def edit
-    are_you_true_person?
-    render :edit
-  end
+  #def edit
+  ### end
 
   # PUT /resource
   # def update
@@ -56,6 +54,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       redirect_to root_path
       flash[:alert] = "権限がありません"
     end
+  end
+
+  def update_resource(resource, params)
+    resource.update_without_current_password(params)
   end
 
   # If you have extra params to permit, append them to the sanitizer.
