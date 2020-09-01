@@ -37,7 +37,13 @@ class BandsController < ApplicationController
 
   def update
     @band = Band.find(params[:id])
-    @band.update(band_params)
+    fate_band_params = band_params[:relationships_attributes].each do |k,v|
+      if v['user_id'].to_i == current_user.id
+        v['permission'] = true
+      end
+    end
+    new_band_params = {name: band_params[:name],relationships_attributes: fate_band_params.to_unsafe_h}
+    @band.update(new_band_params)
     if @band.save
       if @band.users.any?
         redirect_to @band
@@ -101,6 +107,7 @@ class BandsController < ApplicationController
         part
         band_id
         user_id
+        permission
         _destroy
       ]
     )

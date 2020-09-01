@@ -23,6 +23,7 @@
     <tr>
       <th><%= sort_link(@q, :relationships_part, "パート") %></th>
       <th><%= sort_link(@q, :name, "バンド名") %></th>
+      <th><%= sort_link(@q, :updated_at, "変更日時") %></th>
 
     </tr>
     </thead>
@@ -34,7 +35,17 @@
           <% relationship=Relationship.find_by(band_id:band.id,user_id:@user.id) %>
           <%=relationship.part %>
         </td>
-        <td><%=link_to band.name, band%> </td>
+        <td>
+          <%=link_to band.name, band%>
+              <%if relationship.permission == false %>
+                <p class="btn btn-success btn-xs" disabled="disabled">招待中</p>
+                  <%if current_user.id == params[:id].to_i %>
+                    <%=link_to "参加する","/relationships/#{relationship.id}", method: :post, class: "btn btn-primary btn-xs" %>
+                    <%=link_to "拒否する","/relationships/#{relationship.id}", method: :delete, class: "btn btn-danger btn-xs"  %>
+                  <%end %>
+              <%end %>
+        </td>
+        <td><%=band.updated_at %></td>
       </tr>
 
     <% end %>
