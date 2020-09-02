@@ -37,13 +37,7 @@ class BandsController < ApplicationController
 
   def update
     @band = Band.find(params[:id])
-    fate_band_params = band_params[:relationships_attributes].each do |k,v|
-      if v['user_id'].to_i == current_user.id
-        v['permission'] = true
-      end
-    end
-    new_band_params = {name: band_params[:name],relationships_attributes: fate_band_params.to_unsafe_h}
-    @band.update(new_band_params)
+    update_permission
     if @band.save
       if @band.users.any?
         redirect_to @band
@@ -83,11 +77,8 @@ class BandsController < ApplicationController
     end
   end
 
-  # privateメソッド
-  private
-
   def are_you_member?
-    unless  @members.any?{|v| v.id.to_i == current_user.id}
+    unless  @members.any?{|v| v.id.to_i == current_user.id} && Relationship.where(user_id: current_user.id, band_id:@band.id)
       redirect_to root_path
       flash[:alert] = '権限がありません'
     end
@@ -97,7 +88,24 @@ class BandsController < ApplicationController
     relations.to_unsafe_h[:relationships_attributes].any?{|k,v| v["user_id"].to_i == current_user.id}
   end
 
+  #updateアクション時にband_paramsのpermissionを操作
+  def update_permission
+    beta_band_params = band_params[:relationships_attributes].each do |k,v|
+      if v['user_id'].to_i == current_user.id
+        v['permission'] = true
+      end
+      if Relationship.find_by(user_id: v['user_id'].to_i, band_id: @band.id)
+        if Relationship.find_by(user_id: v['user_id'].to_i, band_id: @band.id).permission == true
+          v['permission'] = true
+        end
+      end
+    end
+    new_band_params = {name: band_params[:name],relationships_attributes: beta_band_params.to_unsafe_h}
+    @band.update(new_band_params)
+  end
 
+
+private
 
   def band_params
     params.require(:band).permit(
