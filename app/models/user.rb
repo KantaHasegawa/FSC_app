@@ -15,7 +15,8 @@ class User < ApplicationRecord
   validates :roll, uniqueness: true, if: :leader_uniqueness?
   has_many :relationships, dependent: :destroy
   has_many :bands, through: :relationships
-
+  has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
+  has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
   # メソッド
   #部長副部長は一意でなければならない
   def leader_uniqueness?

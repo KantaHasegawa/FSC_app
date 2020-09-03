@@ -39,6 +39,7 @@ class BandsController < ApplicationController
     @band = Band.find(params[:id])
     update_permission
     if @band.save
+      create_notification_invitation
       if @band.users.any?
         redirect_to @band
         flash[:notice] = 'バンド情報の編集に成功しました'
@@ -104,6 +105,33 @@ class BandsController < ApplicationController
     @band.update(new_band_params)
   end
 
+  def create_notification_invitation
+    band_params[:relationships_attributes].each do |k,v|
+      #削除には処理を外す
+      unless v['_destroy'] == '1'
+        #user_id募集中に通知を送らない
+        unless v['user_id'] == '0'
+          # すでに「いいね」されているか検索
+          temp = Notification.where(["visitor_id = ? and visited_id = ? and band_id = ? and action = ? ",
+                                     current_user.id, v['user_id'].to_i,
+                                     @band.id, 'invitation'])
+          # いいねされていない場合のみ、通知レコードを作成
+          if temp.blank?
+            notification = current_user.active_notifications.new(
+                band_id: @band.id,
+                visited_id: v['user_id'].to_i,
+                action: 'invitation'
+            )
+            # 自分の投稿に対するいいねの場合は、通知済みとする
+            if notification.visitor_id == notification.visited_id
+              notification.checked = true
+            end
+            notification.save if notification.valid?
+          end
+        end
+      end
+    end
+  end
 
 private
 

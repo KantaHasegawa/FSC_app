@@ -6,6 +6,7 @@ class Relationship < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :band
 
+
   def offering?
     user_id == 0
   end
