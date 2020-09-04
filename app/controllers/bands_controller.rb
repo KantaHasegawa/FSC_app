@@ -19,6 +19,7 @@ class BandsController < ApplicationController
       create_permission
       @band = Band.new(@new_band_params)
       if @band.save
+        invitation_and_quit_and_cancel_notification
         redirect_to @band
         flash[:notice] = 'バンドの登録に成功しました'
       else
@@ -47,7 +48,7 @@ class BandsController < ApplicationController
         redirect_to @band
         flash[:notice] = 'バンド情報の編集に成功しました'
       else
-        @band.delete
+        @band.destroy
         redirect_to @band
         flash[:alert] = 'メンバー不在のためバンドを削除しました'
       end
@@ -62,7 +63,7 @@ class BandsController < ApplicationController
     @members = Relationship.where(band_id: @band.id)
     @users = @band.users
     unless @band.users.any?
-      @band.delete
+      @band.destroy
       redirect_to @band
       flash[:alert] = '何らかの理由によりメンバーが不在になったためバンドを削除しました'
     end
@@ -72,7 +73,7 @@ class BandsController < ApplicationController
     @band = Band.find(params[:id])
     @members = @band.users
     are_you_member?
-    if @band.delete
+    if @band.destroy
       redirect_to bands_path
       flash[:notice] = '削除に成功しました'
     else
@@ -90,11 +91,11 @@ class BandsController < ApplicationController
 
   def validate_create(relations)
     if relations[:relationships_attributes]
-    relations.to_unsafe_h[:relationships_attributes].any? { |_k, v| v['user_id'].to_i == current_user.id }
+      relations.to_unsafe_h[:relationships_attributes].any? { |_k, v| v['user_id'].to_i == current_user.id }
     end
   end
 
-  #createアクション時にpermissionをいじる
+  # createアクション時にpermissionをいじる
   def create_permission
     if band_params[:relationships_attributes]
       beta_band_params = band_params[:relationships_attributes].each do |_k, v|
@@ -107,12 +108,12 @@ class BandsController < ApplicationController
   # アクション時にband_paramsのpermissionとdestroy_checkを操作
   def update_permission_and_destroy_check
     if band_params[:relationships_attributes]
-    beta_band_params = band_params[:relationships_attributes].each do |_k, v|
-      v['permission'] = true if v['user_id'].to_i == current_user.id
-      v['destroy_check'] = true if v['_destroy'] == '1'
-    end
-    @new_band_params = { name: band_params[:name], relationships_attributes: beta_band_params.to_unsafe_h }
-    @band.update(@new_band_params)
+      beta_band_params = band_params[:relationships_attributes].each do |_k, v|
+        v['permission'] = true if v['user_id'].to_i == current_user.id
+        v['destroy_check'] = true if v['_destroy'] == '1'
+      end
+      @new_band_params = { name: band_params[:name], relationships_attributes: beta_band_params.to_unsafe_h }
+      @band.update(@new_band_params)
     end
   end
 
@@ -122,30 +123,31 @@ class BandsController < ApplicationController
       # user_id募集中に通知を送らない
       next if v['user_id'] == '0'
 
-      # いいねされていない場合のみ、通知レコードを作成
+      # _destroyのとき削除通知をメンバーに送る
       if v['_destroy'] == '1'
-        quit_user = User.find_by(id: v['user_id'].to_i)
+        optional_user = User.find_by(id: v['user_id'].to_i)
         if v['permission'] == true
           @members.each do |member|
             notification = current_user.active_notifications.new(
               band_id: @band.id,
               visited_id: member.id,
-              quit_user_id: quit_user.id,
+              optional_id: optional_user.id,
               action: 'quit'
             )
-            # 自分の投稿に対するいいねの場合は、通知済みとする
+            # 自分に対しては確認済みにする
             notification.checked = true if notification.visitor_id == notification.visited_id
             notification.save if notification.valid?
           end
         else
+          #_destroy = falseのとき招待キャンセル通知をメンバーに送る
           @members.each do |member|
             notification = current_user.active_notifications.new(
               band_id: @band.id,
               visited_id: member.id,
-              quit_user_id: quit_user.id,
+              optional_id: optional_user.id,
               action: 'cancel'
             )
-            # 自分の投稿に対するいいねの場合は、通知済みとする
+            # 自分の投稿にはチェック済み
             notification.checked = true if notification.visitor_id == notification.visited_id
             notification.save if notification.valid?
           end
@@ -153,6 +155,7 @@ class BandsController < ApplicationController
 
       else
         # すでに通知されているか検索
+        # 招待通知
         temp = Notification.where(['visited_id = ? and band_id = ? and action = ? ', v['user_id'].to_i, @band.id, 'invitation'])
         if temp.blank?
           notification = current_user.active_notifications.new(
@@ -163,8 +166,8 @@ class BandsController < ApplicationController
           # 自分の投稿に対するいいねの場合は、通知済みとする
           notification.checked = true if notification.visitor_id == notification.visited_id
           notification.save if notification.valid?
+        end
       end
-    end
     end
   end
 

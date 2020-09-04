@@ -1,13 +1,13 @@
 <%visitor = notification.visitor %>
 <%visited = notification.visited %>
-<%quit = notification.quit_user %>
+<%optional = notification.optional %>
 <%relationship = Relationship.find_by(user_id: current_user.id, band_id: notification.band.id) %>
 
 <%=link_to visitor.name, visitor %>さんが
 
 <%case notification.action %>
   <%when 'invitation' then%>
-    あなたを<%= link_to notification.band.name, notification.band %>の<%=relationship.part%>に招待しました
+    あなたを<%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>に招待しました
     <% if relationship %>
      <%if relationship.permission == false %>
         <%=link_to "参加する","/relationships/#{relationship.id}", method: :post, class: "btn btn-primary btn-xs" %>
@@ -20,15 +20,15 @@
     <%end %>
 
   <%when 'participated' then%>
-  <%= link_to notification.band.name, notification.band %>の<%=relationship.part if relationship%>に参加しました
+  <%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>に参加しました
 
   <%when 'cancel' then %>
-  <%=link_to quit.name, quit %>さんへの招待をキャンセルしました
+  <%=link_to optional.name, optional %>さんへの招待をキャンセルしました
   (<%= link_to notification.band.name, notification.band %><%=relationship.part if relationship%>)
 
   <%when 'quit' then %>
-  <%=link_to quit.name, quit %>を
-  <%= link_to notification.band.name, notification.band %>の<%=relationship.part if relationship%>から除名しました
+  <%=link_to optional.name, optional %>を
+  <%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>から除名しました
 
 <%end %>
 <%=time_ago_in_words(notification.created_at).upcase %>
