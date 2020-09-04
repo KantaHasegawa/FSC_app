@@ -15,9 +15,9 @@ class BandsController < ApplicationController
   end
 
   def create
-    @band = Band.new(band_params)
-    update_permission_and_destroy_check
     if validate_create(band_params)
+      create_permission
+      @band = Band.new(@new_band_params)
       if @band.save
         redirect_to @band
         flash[:notice] = 'バンドの登録に成功しました'
@@ -89,17 +89,31 @@ class BandsController < ApplicationController
   end
 
   def validate_create(relations)
+    if relations[:relationships_attributes]
     relations.to_unsafe_h[:relationships_attributes].any? { |_k, v| v['user_id'].to_i == current_user.id }
+    end
+  end
+
+  #createアクション時にpermissionをいじる
+  def create_permission
+    if band_params[:relationships_attributes]
+      beta_band_params = band_params[:relationships_attributes].each do |_k, v|
+        v['permission'] = true if v['user_id'].to_i == current_user.id
+      end
+      @new_band_params = { name: band_params[:name], relationships_attributes: beta_band_params.to_unsafe_h }
+    end
   end
 
   # アクション時にband_paramsのpermissionとdestroy_checkを操作
   def update_permission_and_destroy_check
+    if band_params[:relationships_attributes]
     beta_band_params = band_params[:relationships_attributes].each do |_k, v|
       v['permission'] = true if v['user_id'].to_i == current_user.id
       v['destroy_check'] = true if v['_destroy'] == '1'
     end
     @new_band_params = { name: band_params[:name], relationships_attributes: beta_band_params.to_unsafe_h }
     @band.update(@new_band_params)
+    end
   end
 
   def invitation_and_quit_and_cancel_notification
@@ -168,5 +182,5 @@ class BandsController < ApplicationController
         _destroy
       ]
     )
-  end
+   end
 end
