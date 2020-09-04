@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class BandsController < ApplicationController
   before_action :authenticate_user!
   def index
     @q = Band.ransack(params[:q])
     @collections = User.pluck(:name, :id).unshift(['募集中', 0])
-    @bands = @q.result.includes(:users, :relationships).distinct(:true).kaminari_page(params[:page])
+    @bands = @q.result.includes(:users, :relationships).distinct(true).kaminari_page(params[:page])
   end
 
   def new
@@ -14,6 +16,7 @@ class BandsController < ApplicationController
 
   def create
     @band = Band.new(band_params)
+    update_permission_and_destroy_check
     if validate_create(band_params)
       if @band.save
         redirect_to @band
@@ -37,7 +40,7 @@ class BandsController < ApplicationController
 
   def update
     @band = Band.find(params[:id])
-    update_permission
+    update_permission_and_destroy_check
     if @band.save
       invitation_and_quit_and_cancel_notification
       if @band.users.any?
@@ -89,13 +92,11 @@ class BandsController < ApplicationController
     relations.to_unsafe_h[:relationships_attributes].any? { |_k, v| v['user_id'].to_i == current_user.id }
   end
 
-  # updateアクション時にband_paramsのpermissionを操作
-  def update_permission
+  # アクション時にband_paramsのpermissionとdestroy_checkを操作
+  def update_permission_and_destroy_check
     beta_band_params = band_params[:relationships_attributes].each do |_k, v|
       v['permission'] = true if v['user_id'].to_i == current_user.id
-      next unless Relationship.find_by(user_id: v['user_id'].to_i, band_id: @band.id)
-
-      v['permission'] = true if Relationship.find_by(user_id: v['user_id'].to_i, band_id: @band.id).permission == true
+      v['destroy_check'] = true if v['_destroy'] == '1'
     end
     @new_band_params = { name: band_params[:name], relationships_attributes: beta_band_params.to_unsafe_h }
     @band.update(@new_band_params)
@@ -107,40 +108,39 @@ class BandsController < ApplicationController
       # user_id募集中に通知を送らない
       next if v['user_id'] == '0'
 
-
       # いいねされていない場合のみ、通知レコードを作成
-        if v['_destroy'] == '1'
-          quit_user = User.find_by(id: v['user_id'].to_i)
-          if v['permission'] == true
-            @members.each do |member|
-              notification = current_user.active_notifications.new(
-                band_id: @band.id,
-                visited_id: member.id,
-                quit_user_id: quit_user.id,
-                action: 'quit'
-              )
-              # 自分の投稿に対するいいねの場合は、通知済みとする
-              notification.checked = true if notification.visitor_id == notification.visited_id
-              notification.save if notification.valid?
-            end
-          else
-            @members.each do |member|
-              notification = current_user.active_notifications.new(
-                band_id: @band.id,
-                visited_id: member.id,
-                quit_user_id: quit_user.id,
-                action: 'cancel'
-              )
-              # 自分の投稿に対するいいねの場合は、通知済みとする
-              notification.checked = true if notification.visitor_id == notification.visited_id
-              notification.save if notification.valid?
-            end
+      if v['_destroy'] == '1'
+        quit_user = User.find_by(id: v['user_id'].to_i)
+        if v['permission'] == true
+          @members.each do |member|
+            notification = current_user.active_notifications.new(
+              band_id: @band.id,
+              visited_id: member.id,
+              quit_user_id: quit_user.id,
+              action: 'quit'
+            )
+            # 自分の投稿に対するいいねの場合は、通知済みとする
+            notification.checked = true if notification.visitor_id == notification.visited_id
+            notification.save if notification.valid?
           end
-
         else
-          # すでに通知されているか検索
-          temp = Notification.where(['visited_id = ? and band_id = ? and action = ? ', v['user_id'].to_i, @band.id, 'invitation'])
-          if temp.blank?
+          @members.each do |member|
+            notification = current_user.active_notifications.new(
+              band_id: @band.id,
+              visited_id: member.id,
+              quit_user_id: quit_user.id,
+              action: 'cancel'
+            )
+            # 自分の投稿に対するいいねの場合は、通知済みとする
+            notification.checked = true if notification.visitor_id == notification.visited_id
+            notification.save if notification.valid?
+          end
+        end
+
+      else
+        # すでに通知されているか検索
+        temp = Notification.where(['visited_id = ? and band_id = ? and action = ? ', v['user_id'].to_i, @band.id, 'invitation'])
+        if temp.blank?
           notification = current_user.active_notifications.new(
             band_id: @band.id,
             visited_id: v['user_id'].to_i,
@@ -149,8 +149,8 @@ class BandsController < ApplicationController
           # 自分の投稿に対するいいねの場合は、通知済みとする
           notification.checked = true if notification.visitor_id == notification.visited_id
           notification.save if notification.valid?
-        end
       end
+    end
     end
   end
 

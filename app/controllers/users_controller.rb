@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :authenticate_user!
   def index
@@ -8,7 +10,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @q = @user.bands.ransack(params[:q])
-    @bands = @q.result.includes(:users, :relationships).kaminari_page(params[:page]).distinct(:true)
+    @bands = @q.result.includes(:users, :relationships).kaminari_page(params[:page]).distinct(true)
     @graduate_day = Date.new(@user.participated_at + 2, 10)
     @today = Date.today
   end
