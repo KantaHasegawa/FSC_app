@@ -1,11 +1,16 @@
 
-<% @graduate_day = Date.new(current_user.participated_at + 2,10)%>
-<% @today = Date.today %>
-<%unless  @today > @graduate_day %>
+<%# @graduate_day = Date.new(current_user.participated_at + 2,10)%>
+<%# @today = Date.today %>
+<%#unless  @today > @graduate_day %>
   <h2>ユーザー情報の編集 </h2>
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
+
+    <div class="field">
+      <%= f.label :image %><br/>
+      <%= f.file_field :image %>
+    </div>
 
       <div class="field">
         <%= f.label :name,"名前" %><br />
@@ -44,7 +49,7 @@
 
   <div class="field">
     <%= f.label :password,"パスワード(半角英数字6以上)" %> <br>
-    (変更しない場合は現在のパスワードを入力してください)<br />
+    (変更しない場合は空欄)<br />
     <%= f.password_field :password, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
       <br />
@@ -67,10 +72,10 @@
 <h3>アカウントの削除</h3>
 
  <%= button_to "アカウントを削除する", registration_path(resource_name), data: { confirm: "本当によろしいですか？" }, method: :delete %>
-  <%else %>
-  <h2>3年間お疲れさまでした！</h2>
+  <%#else %>
+ <%# <h2>3年間お疲れさまでした！</h2>
   <h2>また皆でビールを飲める日が来るように！</h2>
   <%= button_to "引退する", registration_path(resource_name), data: { confirm: "本当によろしいですか？" }, method: :delete, class: "btn btn-danger" %>
-  <%end %>
+<%#end %>  
 <p></p>
 <%= link_to "戻る", :back, class: "btn btn-info" %>

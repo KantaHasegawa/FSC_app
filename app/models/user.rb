@@ -5,10 +5,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
+  mount_uploader :image, ImageUploader
   VALID_PASSWORD_REGEX = /\A[a-z0-9]+\z/i.freeze
   MAIN_PART_VALUE = %w[Vo Gt Ba Dr Key].freeze
   ROLL_VALUE = %w[平部員 平部長 幹事 会計 渉外 機材 部長 副部長 次期部長 次期副部長].freeze
-  validates :password, format: { with: VALID_PASSWORD_REGEX }
+  # validates :password, format: { with: VALID_PASSWORD_REGEX }
   validates :name, presence: true, length: { maximum: 50 }, uniqueness: true
   validates :gender, presence: true, numericality: { less_than_or_equal_to: 1 }
   validates :participated_at, presence: true
@@ -38,5 +39,19 @@ class User < ApplicationRecord
   # 渡されたユーザーの代を返す
   def what_generation?
     participated_at - 1969
+  end
+
+  # allow users to update their accounts without passwords
+  def update_without_current_password(params, *options)
+    params.delete(:current_password)
+
+    if params[:password].blank? && params[:password_confirmation].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation)
+    end
+
+    result = update_attributes(params, *options)
+    clean_up_passwords
+    result
   end
 end
