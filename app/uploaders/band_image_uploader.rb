@@ -1,4 +1,4 @@
-class ImageUploader < CarrierWave::Uploader::Base
+class BandImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
    include CarrierWave::MiniMagick
@@ -20,21 +20,20 @@ class ImageUploader < CarrierWave::Uploader::Base
   #
   #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
   # end
-  #
 
+  # Process files as they are uploaded:
+  # process scale: [200, 300]
+  #
+  # def scale(width, height)
+  #   # do something
+  # end
   def default_url
-    "/assets/beer.png"
+    "/assets/guitar.jpeg"
   end
 
   # Process files as they are uploaded:
   process resize_to_limit: [300, 200]
   process resize_to_fill: [50, 50, "Center"]
-
-
-  #
-  # def scale(width, height)
-  #   # do something
-  # end
 
   # Create different versions of your uploaded files:
   # version :thumb do

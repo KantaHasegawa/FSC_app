@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_13_012334) do
+ActiveRecord::Schema.define(version: 2020_09_14_031856) do
 
   create_table "bands", force: :cascade do |t|
     t.string "name"
@@ -30,6 +30,9 @@ ActiveRecord::Schema.define(version: 2020_09_13_012334) do
     t.integer "optional_id"
     t.string "destroy_band"
     t.integer "relationship_id"
+    t.index ["band_id"], name: "index_notifications_on_band_id"
+    t.index ["visited_id"], name: "index_notifications_on_visited_id"
+    t.index ["visitor_id"], name: "index_notifications_on_visitor_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -40,6 +43,8 @@ ActiveRecord::Schema.define(version: 2020_09_13_012334) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "permission", default: false
     t.boolean "destroy_check", default: false
+    t.index ["band_id"], name: "index_relationships_on_band_id"
+    t.index ["user_id"], name: "index_relationships_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

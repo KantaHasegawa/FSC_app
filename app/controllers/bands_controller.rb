@@ -95,7 +95,7 @@ class BandsController < ApplicationController
       )
     end
     if @band.destroy
-      @destroy_band_notification.save if @destroy_band_notification.valid?
+      @destroy_band_notification.save if @destroy_band_notification
       redirect_to bands_path
       flash[:notice] = '削除に成功しました'
     else
@@ -123,7 +123,7 @@ class BandsController < ApplicationController
       beta_band_params = band_params[:relationships_attributes].each do |_k, v|
         v['permission'] = true if v['user_id'].to_i == current_user.id
       end
-      @new_band_params = { name: band_params[:name], relationships_attributes: beta_band_params.to_unsafe_h }
+      @new_band_params = { name: band_params[:name], image: band_params[:image], relationships_attributes: beta_band_params.to_unsafe_h }
     end
   end
 
