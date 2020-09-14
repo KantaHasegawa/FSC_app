@@ -5,6 +5,9 @@
 
 <img src=<%= visitor.image %> alt class = "icon_image">
 <%=link_to visitor.name, visitor %>さんが
+<%if notification.band %>
+  <img src=<%= notification.band.image %> alt class = "icon_image">
+<%end %>
 
 <%case notification.action %>
   <%when 'invitation' then%>
@@ -21,7 +24,7 @@
     <%end %>
 
   <%when 'invitation_other' then %>
-  <%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>に<%=link_to optional.name, optional %>を招待しました
+  <%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>に<%=link_to optional.name, optional %>さんを招待しました
 
   <%when 'cancel' then%>
   あなたへの招待をキャンセルしました
@@ -38,7 +41,7 @@
     <%if visitor.id == optional.id %>
      <%= link_to notification.band.name, notification.band %>を退会しました
     <%else %>
-     <%= link_to notification.band.name, notification.band %>から<%=link_to optional.name, optional %>を除名しました
+     <%= link_to notification.band.name, notification.band %>から<%=link_to optional.name, optional %>さんを除名しました
     <%end %>
 
   <%when 'participated' then%>
