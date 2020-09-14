@@ -3,6 +3,7 @@
 <%optional = notification.optional %>
 <% relationship = Relationship.find_by(user_id: current_user.id, band_id: notification.band.id) if notification.band_id%>
 
+<img src=<%= visitor.image %> alt class = "icon_image">
 <%=link_to visitor.name, visitor %>さんが
 
 <%case notification.action %>

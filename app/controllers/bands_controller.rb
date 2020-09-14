@@ -137,7 +137,7 @@ class BandsController < ApplicationController
 
         v['permission'] = true if Relationship.find_by(user_id: v['user_id'].to_i, band_id: @band.id).permission == true
       end
-      @new_band_params = { name: band_params[:name], relationships_attributes: beta_band_params.to_unsafe_h }
+      @new_band_params = { name: band_params[:name], image: band_params[:image], relationships_attributes: beta_band_params.to_unsafe_h }
       @band.update(@new_band_params)
     end
   end
@@ -225,6 +225,7 @@ class BandsController < ApplicationController
   def band_params
     params.require(:band).permit(
       :name,
+            :image,
       relationships_attributes: %i[
         id
         part
