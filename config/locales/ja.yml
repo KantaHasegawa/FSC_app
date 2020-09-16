@@ -1,0 +1,18 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      band: バンド
+    attributes:
+      user:
+        name: 名前
+        participated_at: 入部年
+        email: メール
+        roll: 役職
+        main_part: メインパート
+        image: プロフィール画像
+
+      band:
+        name: バンド名
+        image: 画像
+

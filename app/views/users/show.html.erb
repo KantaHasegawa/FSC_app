@@ -1,12 +1,7 @@
 <h1>プロフィール</h1>
 <img src=<%= @user.image %> alt class = "icon_image">
 <%if @user.id == current_user.id %>
-  <%#if @today > @graduate_day %>
-    <%#= link_to "引退する",      edit_user_registration_path, class: "btn btn-warning" %>
-    <%#else %>
-
     <%= link_to "ユーザー情報を編集する",      edit_user_registration_path, class: "btn btn-primary" %>
-  <%#end %>
 <%end %>
 <p></p>
 <table class="table table-striped table-bordered">

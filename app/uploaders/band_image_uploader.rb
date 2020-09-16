@@ -1,7 +1,7 @@
 class BandImageUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-   include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -28,12 +28,12 @@ class BandImageUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
   def default_url
-    "/assets/guitar.jpeg"
+    '/assets/guitar.jpeg'
   end
 
   # Process files as they are uploaded:
   process resize_to_limit: [300, 200]
-  process resize_to_fill: [50, 50, "Center"]
+  process resize_to_fill: [50, 50, 'Center']
 
   # Create different versions of your uploaded files:
   # version :thumb do

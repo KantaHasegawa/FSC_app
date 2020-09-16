@@ -1,5 +1,4 @@
 <%visitor = notification.visitor %>
-<%visited = notification.visited %>
 <%optional = notification.optional %>
 <% relationship = Relationship.find_by(user_id: current_user.id, band_id: notification.band.id) if notification.band_id%>
 
@@ -12,16 +11,12 @@
 <%case notification.action %>
   <%when 'invitation' then%>
     あなたを<%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>に招待しました
-    <% if relationship %>
      <%if relationship.permission == false %>
         <%=link_to "参加する","/relationships/#{relationship.id}", method: :post, class: "btn btn-primary btn-xs" %>
         <%=link_to "拒否する","/relationships/#{relationship.id}", method: :delete, class: "btn btn-danger btn-xs"  %>
       <%else %>
       <p class="btn btn-info btn-xs" disabled="disabled">参加済み</p>
      <%end %>
-    <%else %>
-      <p class="btn btn-success btn-xs" disabled="disabled">無効な通知です</p>
-    <%end %>
 
   <%when 'invitation_other' then %>
   <%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>に<%=link_to optional.name, optional %>さんを招待しました

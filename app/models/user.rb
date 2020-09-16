@@ -9,7 +9,8 @@ class User < ApplicationRecord
   VALID_PASSWORD_REGEX = /\A[a-z0-9]+\z/i.freeze
   MAIN_PART_VALUE = %w[Vo Gt Ba Dr Key].freeze
   ROLL_VALUE = %w[平部員 平部長 幹事 会計 渉外 機材 部長 副部長 次期部長 次期副部長].freeze
-  # validates :password, format: { with: VALID_PASSWORD_REGEX }
+  validates :password, length: { in: 6..128 }, format: { with: VALID_PASSWORD_REGEX }, on: :create
+  validates :password, length: { in: 6..128 }, format: { with: VALID_PASSWORD_REGEX }, on: :update, allow_blank: true
   validates :name, presence: true, length: { maximum: 50 }, uniqueness: true
   validates :gender, presence: true, numericality: { less_than_or_equal_to: 1 }
   validates :participated_at, presence: true
@@ -22,7 +23,7 @@ class User < ApplicationRecord
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
   # メソッド
-  # 部長副部長は一意でなければならない
+  # 部長、副部長は一意でなければならない
   def leader_uniqueness?
     roll == '部長' || roll == '副部長' || roll == '次期部長' || roll == '次期副部長'
   end
@@ -41,7 +42,7 @@ class User < ApplicationRecord
     participated_at - 1969
   end
 
-  # allow users to update their accounts without passwords
+  # Userレコードをcurrent_password無しで更新する
   def update_without_current_password(params, *options)
     params.delete(:current_password)
 

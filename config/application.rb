@@ -26,6 +26,7 @@ module FSCAppForDvise
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
     config.i18n.default_locale = :ja
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]
     # 以下を追加
     config.action_view.field_error_proc = proc { |html_tag, _instance| html_tag }
 
