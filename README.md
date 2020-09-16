@@ -1,24 +1,32 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+こんにちは、長谷川カンタと申します
+このアプリは身内のバンドサークルで使用する予定の管理アプリです
+まだ完成していませんが基本的な部分は実装できたので一旦コードレビューをしてもらおうと思い依頼しました
 
-Things you may want to cover:
 
-* Ruby version
+User 
 
-* System dependencies
+ユーザーのアカウント情報です。ログイン周りの機能はdeviseを使って実装しました
 
-* Configuration
+Band
 
-* Database creation
+バンドの情報です 画像アップロードはcarrierwaveを使って実装しています
 
-* Database initialization
+Relationship
 
-* How to run the test suite
+UserとBandの中間テーブルです
+gemのcocoonをつかってBandテーブルとまとめてレコードを登録、更新出来るようにしています。
+permissionカラムの値を使ってLineのグループのように招待機能をつけています
+ここ周辺のメソッドがかなり無理矢理で冗長なコードになっているためアドバイスを頂けると嬉しいです
+また、destroy_checkカラムは本来なら実装したくなかったのですがband.rbのresource_be_uniqメソッドにて使用するため実装しました
+こちらも他の方法がある気がするので助言をいただきたいです
 
-* Services (job queues, cache servers, search engines, etc.)
+Notification
 
-* Deployment instructions
+通知機能です
+visitor_idは通知を送るユーザー、visited_idは通知を受け取るユーザー、optional_idは第三者の情報です(visitorがoptionalを〇〇しました)
+通知作成のメソッドが冗長になってしまったため短くしたいと思っています
+スコープの関係でどう小分けにしたらいいかわからなく困っております
 
-* ...
+初めての開発なので見苦しいコードだとは思いますがよろしくお願いします
