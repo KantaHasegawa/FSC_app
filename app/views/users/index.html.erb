@@ -1,0 +1,51 @@
+<h1>部員一同</h1>
+<%= search_form_for @q do |f| %>
+
+  <%= f.label :name,"名前" %>
+<%= f.search_field :name_cont %> <br>
+<%= f.label :participated_at,"入部年" %>
+<%= f.number_field :participated_at_gteq %>以上〜
+<%= f.number_field :participated_at_lt %>未満 <br>
+<%= f.label :gender, "性別" %>
+<%= f.radio_button :gender_eq, '', {:checked => true} %>指定なし
+<%= f.radio_button :gender_eq, 0 %>男性
+<%= f.radio_button :gender_eq, 1 %>女性 <br>
+  <%= f.label :main_part,"メインパート" %>
+  <%= f.select :main_part_eq,[["Vo","Vo"],["Gt","Gt"],["Ba","Ba"],["Dr","Dr"],["Key","Key"]],{include_blank: true}%>
+  <%= f.label :roll,"役職" %>
+  <%= f.select :roll_eq,[["平部員","平部員"],["平部長","平部長"],["幹事","幹事"],["会計","会計"],["渉外","渉外"],["機材","機材"],["部長","部長"],["副部長","副部長"],["次期部長","次期部長"],["次期副部長","次期副部長"]],{include_blank: true}%> <br>
+
+<%= f.submit %>
+<%end %>
+<p></p>
+*項目タップで昇順降順ソートが出来ます
+<p></p>
+
+<table class="table table-striped table-bordered">
+  <thead>
+  <tr>
+    <th ><%= sort_link(@q, :name, "名前") %></th>
+    <th ><%= sort_link(@q, :gender, "性別") %></th>
+    <th ><%= sort_link(@q, :main_part, "パート") %></th>
+    <th ><%= sort_link(@q, :roll, "役職") %></th>
+
+    <th ><%= sort_link(@q, :participated_at, "入部年(代)") %></th>
+
+
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @users.each do |user| %>
+    <tr>
+      <td ><img src=<%= user.image %> alt class = "icon_image">
+        <%=link_to user.name, user%></td>
+      <td ><%= user.what_gender %> </td>
+      <td ><%= user.main_part %> </td>
+      <td ><%= user.roll %> </td>
+      <td ><%="#{user.participated_at}年(#{user.what_generation?}代)" %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%=paginate @users %>

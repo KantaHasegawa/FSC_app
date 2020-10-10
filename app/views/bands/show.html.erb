@@ -1,0 +1,47 @@
+<h1>バンド詳細</h1>
+<h2><img src=<%= @band.image %> alt class = "icon_image"><%= @band.name %></h2>
+
+<table class="table table-striped table-bordered">
+  <thead >
+  <tr>
+    <th>名前</th>
+    <th>パート</th>
+
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <% @members.each do |member| %>
+    <tr>
+      <td>
+        <%if member.user_id == 0 %>
+          <%= image_tag '/assets/offer.png' %>
+          <p class="btn btn-info btn-xs" disabled="disabled">募集中</p>
+          <%unless @users.any? {|v| v.id.to_i == current_user.id} %>
+            <%=link_to "参加する","/relationships/participation/#{member.id}", method: :post, data: {confirm: "本当によろしいですか？"}, class: 'btn btn-primary btn-xs' %>
+          <%end %>
+      <%else %>
+          <%user=User.find_by(id: member.user_id) %>
+          <img src=<%= user.image %> alt class = "icon_image">
+          <%=link_to user.name, user%>
+          <%if member.permission == false %>
+            <p class="btn btn-success btn-xs" disabled="disabled">招待中</p>
+            <%if member.user_id == current_user.id %>
+              <%=link_to "参加する","/relationships/#{member.id}", method: :post, class: "btn btn-primary btn-xs" %>
+              <%=link_to "拒否する","/relationships/#{member.id}", method: :delete, class: "btn btn-danger btn-xs"  %>
+            <%end %>
+          <%end %>
+        <%end %>
+      </td>
+      <td><%=member.part %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<p></p>
+<%=link_to 'バンド一覧へ戻る', bands_path, class: 'btn btn-info' %>
+<%if @users.any? {|v| v.id.to_i == current_user.id} && Relationship.find_by(user_id: current_user.id, band_id: @band.id).permission == true %>
+<%=link_to 'メンバーを編集する', edit_band_path, class: 'btn btn-primary' %>
+<%end %>
