@@ -16,7 +16,7 @@ gem 'bootstrap-will_paginate',    '1.0.0'
 gem 'carrierwave'
 gem 'cocoon'
 gem 'config'
-gem 'debase'
+gem 'debase', '0.2.4.1'
 gem 'devise'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
@@ -28,7 +28,7 @@ gem 'mini_magick', '4.9.5'
 gem 'puma', '4.3.5'
 gem 'rails-i18n'
 gem 'ransack'
-gem 'ruby-debug-ide'
+gem 'ruby-debug-ide', '0.7.2'
 gem 'sass-rails', '6.0.0'
 gem 'select2-rails'
 gem 'turbolinks', '5.2.1'
@@ -36,7 +36,7 @@ gem 'webpacker', '4.2.2'
 
 group :development, :test do
   gem 'byebug',  '11.1.3', platforms: %i[mri mingw x64_mingw]
-  gem 'sqlite3', '1.4.2'
+  gem 'mysql2'
 end
 
 group :development do
@@ -61,5 +61,5 @@ end
 
 group :production do
   gem 'aws-sdk-s3', '1.46.0', require: false
-  gem 'pg',         '1.2.3'
+  gem 'mysql2'
 end
