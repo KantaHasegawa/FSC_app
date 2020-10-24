@@ -1,25 +1,34 @@
-<h1>部員一同</h1>
+
+
+
+
+<div class="index_container">
+<div class="sidebar">
+    <div class="sidebar__item">
+        <div class="serchBox_m">条件で絞り込む</div>
 <%= search_form_for @q do |f| %>
 
-  <%= f.label :name,"名前" %>
+<div class="serchBox_m">名前</div>
 <%= f.search_field :name_cont %> <br>
-<%= f.label :participated_at,"入部年" %>
+<div class="serchBox_m">入部年</div>
 <%= f.number_field :participated_at_gteq %>以上〜
 <%= f.number_field :participated_at_lt %>未満 <br>
-<%= f.label :gender, "性別" %>
+<div class="serchBox_m">性別</div>
 <%= f.radio_button :gender_eq, '', {:checked => true} %>指定なし
 <%= f.radio_button :gender_eq, 0 %>男性
 <%= f.radio_button :gender_eq, 1 %>女性 <br>
-  <%= f.label :main_part,"メインパート" %>
+  <div class="serchBox_m">メインパート</div>
   <%= f.select :main_part_eq,[["Vo","Vo"],["Gt","Gt"],["Ba","Ba"],["Dr","Dr"],["Key","Key"]],{include_blank: true}%>
-  <%= f.label :roll,"役職" %>
+  <div class="serchBox_m">役職</div>
   <%= f.select :roll_eq,[["平部員","平部員"],["平部長","平部長"],["幹事","幹事"],["会計","会計"],["渉外","渉外"],["機材","機材"],["部長","部長"],["副部長","副部長"],["次期部長","次期部長"],["次期副部長","次期副部長"]],{include_blank: true}%> <br>
 
-<%= f.submit %>
+<div class=serchButton_m><%= f.submit %><br></div>
 <%end %>
-<p></p>
-*項目タップで昇順降順ソートが出来ます
-<p></p>
+    </div>
+  </div>
+  <main class="main">
+  <div class="emphasis">部員をさがす </div>
+
 
 <table class="table table-striped table-bordered">
   <thead>
@@ -48,4 +57,8 @@
   <% end %>
   </tbody>
 </table>
+  </main>
+
+</div>
+
 <%=paginate @users %>

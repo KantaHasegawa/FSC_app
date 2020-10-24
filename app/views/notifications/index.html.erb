@@ -1,8 +1,8 @@
-<h1>通知</h1>
+<div class='emphasis'>通知</div>
 <%notifications = @notifications.where.not(visitor_id: current_user.id) %>
 <%if notifications.exists? %>
   <%= render notifications %>
   <%= paginate notifications %>
 <%else %>
-  | 通知は有りません
+  <div class='emphasis'>まだ通知がありません</div>
 <%end %>
