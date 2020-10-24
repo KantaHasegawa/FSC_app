@@ -1,16 +1,19 @@
-<h2>パスワードを忘れましたか？</h2>
-
+<div class="col-sm-6 col-md-4 col-md-offset-4">
+            <div class="account-wall">
+                <div class="chase-logo">
+                  <h1 class="text-center login-title">パスワードが思い出せませんか？</h1>
+                  <p class="text-center normal-text ">登録したアドレスに変更メールを送ります</p>
+                </div>
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "メールアドレスを入力してください" %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "パスワードを変更する" %>
+  <div class="action">
+    <%= f.submit "パスワードを変更する",class: "btn btn-lg btn-warning btn-block" %>
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<div style="margin-top: 15px"><%= render "devise/shared/links" %></div>
