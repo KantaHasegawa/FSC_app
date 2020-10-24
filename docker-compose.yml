@@ -11,13 +11,13 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_USER: kanta
       MYSQL_PASSWORD: kanta
-      
+
 
   web:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bash -c "yarn install && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "yarn install && rm -f /FSC_app/tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     tty: true
     stdin_open: true
     depends_on:
