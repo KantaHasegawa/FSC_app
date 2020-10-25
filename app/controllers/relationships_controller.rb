@@ -44,7 +44,7 @@ class RelationshipsController < ApplicationController
     else
       flash[:alert] = '拒否に失敗しました'
       redirect_back(fallback_location: bands_path)
-   end
+    end
   end
 
   def participated_notification # 参加通知

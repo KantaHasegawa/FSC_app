@@ -32,7 +32,7 @@ class Band < ApplicationRecord
         elsif m[attribute_name] != 0 # user_id = 0(募集中)は複数存在して良い
           uniq << m[attribute_name]
         end
-     end
+      end
     end
     success
   end

@@ -5,12 +5,10 @@
     <h3>皆が使いやすいようにバンド名は正式名称で入力してください</h3>
     <%= f.label :name, "バンド名を入力" %>
     <%= f.text_field :name %>
-
     <div class="field">
       <%= f.label :image %><br/>
       <%= f.file_field :image %>
     </div>
-
     <%= f.fields_for :relationships do |relationship| %>
       <%= render 'relationship_fields', f: relationship %>
     <% end %>
@@ -18,11 +16,10 @@
       <%= link_to_add_association 'メンバーを追加', f, :relationships, class: 'btn btn-default' %>
       <p></p>
     </div>
-
-
     <%= f.submit "確定する", data: {confirm: "本当によろしいですか？"}, class: "btn btn-primary" %>
     <%= link_to 'キャンセル', @band, class: 'btn btn-info' %> <br>
-    <p></p> <%= link_to "バンドを削除する", @band, method: :delete, data: {confirm: "本当によろしいですか？"}, class: 'btn btn-danger' %>
+    <p></p>
+     <%= link_to "バンドを削除する", @band, method: :delete, data: {confirm: "本当によろしいですか？"}, class: 'btn btn-danger' %>
     <br>
     *メンバーが存在しない状態で確定した場合バンドは自動的に削除されます
   <% end %>

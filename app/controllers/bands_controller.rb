@@ -237,6 +237,5 @@ class BandsController < ApplicationController
         _destroy
       ]
     )
-   end
+  end
 end
-

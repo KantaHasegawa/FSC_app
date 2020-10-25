@@ -1,60 +1,53 @@
-
-
 <div class="index_container">
   <div class="sidebar">
     <div class="sidebar__item">
       <div class="serchBox_m">条件で絞り込む</div>
-  <%= search_form_for @q do |f| %>
-  <div class=serchBox_m>バンド名<br></div>
-  <%= f.search_field :name_cont  %> <br>
-  <div class=serchBox_m>メンバー<br></div>
-  <%= f.collection_select :relationships_user_id_in_all, @collections, :last, :first, {:include_blank => '指定なし'} %> <br>
-  <div class=serchBox_m>所属パート<br></div>
-  <%= f.select :relationships_part_eq,[["指定なし",""],["Vo1","Vo1"],["Vo2","Vo2"],["GtVo","GtVo"],["BaVo","BaVo"],["Gt1","Gt1"],["Gt2","Gt2"],["Ba","Ba"],["Dr","Dr"],["Key","Key"],["その他","その他"]], class: "form-control"%>
-  <br>
-  <div class=serchButton_m><%= f.submit %><br></div>
-  <h3> <%=link_to "新しいバンドを作成する", new_band_path, class: "btn btn-primary"%> </h3>
-  <%end %>
-
+      <%= search_form_for @q do |f| %>
+        <div class=serchBox_m>バンド名<br>
+        </div>
+        <%= f.search_field :name_cont  %> <br>
+        <div class=serchBox_m>メンバー<br>
+        </div>
+        <%= f.collection_select :relationships_user_id_in_all, @collections, :last, :first, {:include_blank => '指定なし'} %> <br>
+        <div class=serchBox_m>所属パート<br>
+        </div>
+        <%= f.select :relationships_part_eq,[["指定なし",""],["Vo1","Vo1"],["Vo2","Vo2"],["GtVo","GtVo"],["BaVo","BaVo"],["Gt1","Gt1"],["Gt2","Gt2"],["Ba","Ba"],["Dr","Dr"],["Key","Key"],["その他","その他"]], class: "form-control"%>
+        <br>
+        <div class=serchButton_m><%= f.submit %><br>
+        </div>
+        <h3> <%=link_to "新しいバンドを作成する", new_band_path, class: "btn btn-primary"%> </h3>
+      <%end %>
     </div>
   </div>
-
   <main class="main">
-  <div class="emphasis">バンドをさがす </div>
-
-
-
-  <table class="table table-striped table-bordered">
-  <thead>
-  <tr>
-    <th><%= sort_link(@q, :name, "バンド名") %></th>
-    <th><%= sort_link(@q, :updated_at, "変更日時") %></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @bands.each do |band| %>
-    <tr>
-      <td>
-        <img src=<%= band.image %> alt class = "icon_image">
-        <%=link_to band.name, band%>
-            <% if Relationship.where(band_id: band.id).find_by(user_id: 0) %>
-              <p class="btn btn-info btn-xs" disabled="disabled">募集中</p>
-            <%end%>
-            <%if Relationship.find_by(user_id: current_user.id, band_id: band.id) %>
-              <% if Relationship.find_by(user_id: current_user.id, band_id: band.id).permission == false %>
-               <p class="btn btn-success btn-xs" disabled="disabled">招待中</p>
+    <div class="emphasis">バンドをさがす </div>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th><%= sort_link(@q, :name, "バンド名") %></th>
+          <th><%= sort_link(@q, :updated_at, "変更日時") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @bands.each do |band| %>
+          <tr>
+            <td>
+              <img src=<%= band.image %> alt class = "icon_image">
+              <%=link_to band.name, band%>
+              <% if Relationship.where(band_id: band.id).find_by(user_id: 0) %>
+                <p class="btn btn-info btn-xs" disabled="disabled">募集中</p>
+              <%end%>
+              <%if Relationship.find_by(user_id: current_user.id, band_id: band.id) %>
+                <% if Relationship.find_by(user_id: current_user.id, band_id: band.id).permission == false %>
+                  <p class="btn btn-success btn-xs" disabled="disabled">招待中</p>
+                <%end %>
               <%end %>
-            <%end %>
-      </td>
-      <td><%=band.updated_at %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-</main>
-
+            </td>
+            <td><%=band.updated_at %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </main>
 </div>
-
-
 <%=paginate @bands %>

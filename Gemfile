@@ -28,6 +28,7 @@ gem 'mini_magick', '4.9.5'
 gem 'puma', '4.3.5'
 gem 'rails-i18n'
 gem 'ransack'
+gem 'react-rails'
 gem 'ruby-debug-ide', '0.7.2'
 gem 'sass-rails', '6.0.0'
 gem 'select2-rails'
@@ -35,17 +36,22 @@ gem 'turbolinks', '5.2.1'
 gem 'webpacker', '4.2.2'
 
 group :development, :test do
-  gem 'byebug',  '11.1.3', platforms: %i[mri mingw x64_mingw]
+  gem 'byebug', '11.1.3', platforms: %i[mri mingw x64_mingw]
   gem 'mysql2'
 end
 
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'listen',                '3.2.1'
+  gem 'listen', '3.2.1'
+  gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec'
   gem 'spring',                '2.1.0'
   gem 'spring-watcher-listen', '2.0.1'
-  gem 'web-console',           '4.0.2'
+  gem 'web-console', '4.0.2'
+  gem 'htmlbeautifier'
 end
 
 group :test do

@@ -4,14 +4,13 @@
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "ホーム",   root_path %></li>
-        <li><%= link_to "ヘルプ",   static_pages_help_path %></li>
         <%if user_signed_in? %>
           <li><%= link_to "プロフィール" ,    current_user %></li>
           <li><%if unchecked_notifications.any? %>
               <%= link_to '通知(New)',  notifications_path %>
-              <%else %>
+            <%else %>
               <%= link_to '通知',  notifications_path %>
-              <%end %></li>
+            <%end %></li>
           <li><%= link_to "部員",    users_path %></li>
           <li><%= link_to "バンド",    bands_path %></li>
           <li><%= link_to "ログアウト" ,      destroy_user_session_path ,method: :delete%></li>
