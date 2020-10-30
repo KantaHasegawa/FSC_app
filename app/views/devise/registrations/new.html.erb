@@ -4,41 +4,7 @@
       <h1 class="text-center login-title">はじめまして！</h1>
       <p class="text-center normal-text ">登録に必要な情報を入力してください</p>
     </div>
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
-      <div class="field">
-        <%= f.label :image %><br/>
-        <%= f.file_field :image %>
-      </div>
-      <div style="margin-top: 5px; margin-bottom: 5px">
-        <%= f.radio_button :gender, 0 %>男
-        <%= f.radio_button :gender, 1 %>女
-      </div>
-      <div class="field">
-        <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "フルネームを入力してください" %>
-      </div>
-      <div class="field">
-        <%= f.number_field :participated_at ,autofocus: true, class: "form-control", placeholder: "入部した年を入力してください" %>
-      </div>
-      <div class="field">
-        <%= f.select :main_part,[["Vo","Vo"],["Gt","Gt"],["Ba","Ba"],["Dr","Dr"],["Key","Key"]], {}, class: "form-control"%>
-      </div>
-      <div class="field">
-        <%= f.select :roll,[["平部員","平部員"],["平部長","平部長"],["幹事","幹事"],["会計","会計"],["渉外","渉外"],["機材","機材"],["部長","部長"],["副部長","副部長"],["次期部長","次期部長"],["次期副部長","次期副部長"]], {}, class: "form-control"%>
-      </div>
-      <div class="field">
-        <%= f.email_field :email, autocomplete: "email", class: "form-control", placeholder: "メールアドレスを入力してください" %>
-      </div>
-      <div class="field">
-        <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "英数字6文字以上でパスワードを入力してください" %>
-      </div>
-      <div class="field">
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "確認用パスワードを入力してください" %>
-      </div>
-      <div class="action">
-        <%= f.submit "登録する",class: "btn btn-lg btn-warning btn-block" %>
-      </div>
-    <% end %>
+      <%= react_component("SignUp", token: form_authenticity_token) %>
     <div style="margin-top: 15px"><%= render "devise/shared/links" %></div>
   </div>
 </div>

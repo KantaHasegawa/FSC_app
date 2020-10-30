@@ -7,8 +7,8 @@ class SignIn extends React.Component {
     this.state = {
       email: '',
       password: '',
-      email_error: false,
-      password_error: false,
+      email_error: true,
+      password_error: true,
     };
   }
 

@@ -19,7 +19,7 @@
     <%= f.submit "確定する", data: {confirm: "本当によろしいですか？"}, class: "btn btn-primary" %>
     <%= link_to 'キャンセル', @band, class: 'btn btn-info' %> <br>
     <p></p>
-     <%= link_to "バンドを削除する", @band, method: :delete, data: {confirm: "本当によろしいですか？"}, class: 'btn btn-danger' %>
+    <%= link_to "バンドを削除する", @band, method: :delete, data: {confirm: "本当によろしいですか？"}, class: 'btn btn-danger' %>
     <br>
     *メンバーが存在しない状態で確定した場合バンドは自動的に削除されます
   <% end %>

@@ -1,8 +1,10 @@
 <div class="emphasis">プロフィール</div>
 <img src=<%= @user.image %> alt class = "icon_image">
+<p></p>
 <%if @user.id == current_user.id %>
-  <%= link_to "ユーザー情報を編集する",      edit_user_registration_path, class: "btn btn-primary" %>
+  <%= react_component("ProfileImage",token: form_authenticity_token) %>
 <%end %>
+
 <p></p>
 <table class="table table-striped table-bordered">
   <tr>
@@ -32,6 +34,12 @@
     </tr>
   <%end %>
 </table>
+
+<%if @user.id == current_user.id %>
+<div>  <%= link_to "ユーザー情報を編集する",      edit_user_registration_path, class: "btn btn-warning user_edit_botton" %>
+</div>
+<%end %>
+
 <div class="emphasis"><%= "持ちバンド #{@user.bands.count}" %></div>
 <table class="table table-striped table-bordered">
   <thead >
