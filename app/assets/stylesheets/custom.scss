@@ -23,11 +23,18 @@ textarea {
   margin-bottom: 10px;
 }
 
+.dynamic_error_message {
+  color: red;
+  font-style: italic;
+}
+
 .emphasis{
   font-size: 200%;
   font-weight: 700;
   margin-bottom: 20px;
 }
+
+// サイドバー
 
 .index_container {
   width: 1000px;
