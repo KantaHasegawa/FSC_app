@@ -23,11 +23,27 @@ textarea {
   margin-bottom: 10px;
 }
 
+.topandbottom5px{
+  margin-top: 5px;
+  margin-bottom: 5px
+}
+
+.dynamic_error_message {
+  color: red;
+  font-style: italic;
+}
+
 .emphasis{
   font-size: 200%;
   font-weight: 700;
   margin-bottom: 20px;
 }
+
+.user_edit_botton{
+  float: right;
+}
+
+// サイドバー
 
 .index_container {
   width: 1000px;

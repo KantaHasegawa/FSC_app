@@ -44,3 +44,5 @@ yarn-debug.log*
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
+public/uploads/band/image/1/64623387_p0_master1200.jpg
+public/uploads/user/image/1/001_2018.02.01_uza0086.jpg

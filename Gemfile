@@ -10,13 +10,12 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 
 gem 'active_storage_validations', '0.8.9'
 gem 'bcrypt',                     '3.1.13'
-gem 'bootsnap',                   '1.4.6', require: false
+gem 'bootsnap',                   '1.4.6'
 gem 'bootstrap-sass',             '3.4.1'
 gem 'bootstrap-will_paginate',    '1.0.0'
 gem 'carrierwave'
 gem 'cocoon'
 gem 'config'
-gem 'debase', '0.2.4.1'
 gem 'devise'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
@@ -28,8 +27,7 @@ gem 'mini_magick', '4.9.5'
 gem 'puma', '4.3.5'
 gem 'rails-i18n'
 gem 'ransack'
-gem 'react-rails'
-gem 'ruby-debug-ide', '0.7.2'
+gem 'react-rails', '2.5.0'
 gem 'sass-rails', '6.0.0'
 gem 'select2-rails'
 gem 'turbolinks', '5.2.1'
@@ -38,6 +36,8 @@ gem 'webpacker', '4.2.2'
 group :development, :test do
   gem 'byebug', '11.1.3', platforms: %i[mri mingw x64_mingw]
   gem 'mysql2'
+  gem 'debase', '0.2.4.1'
+  gem 'ruby-debug-ide', '0.7.2'
 end
 
 group :development do
