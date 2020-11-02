@@ -11,7 +11,7 @@ class ProfileImage extends React.Component {
 
 
   render() {
-    
+
     return (
       <form class="edit_user" id="edit_user" action="/users" enctype="multipart/form-data" accept-charset="UTF-8" method="post">
         <input type="hidden" name="_method" value="put"></input>

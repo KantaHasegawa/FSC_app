@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   resources :users, only: %i[index show]
   resources :bands
   resources :notifications, only: %i[index]
+  resources :relationships, only: %i[index] do
+    collection do
+      delete 'destroy_all'
+    end
+  end
   get '/users/sign_out' => 'devise/sessions#destroy'
   root to: 'static_pages#home'
   get 'static_pages/help'

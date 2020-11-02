@@ -3,6 +3,11 @@
 class RelationshipsController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @relationships=Relationship.where(band_id: params[:band_id])
+    @count=0
+  end
+
   def participation # バンドに参加する
     @relationship = Relationship.find(params[:id])
     if @relationship.user_id == 0 # 更新するrelationshipのuser_idが0(募集中)ならcurrent_userのidを代入しpermissionもtrueにする
@@ -47,6 +52,16 @@ class RelationshipsController < ApplicationController
     end
   end
 
+  def destroy_all
+    checked_data = params[:deletes].keys # ここでcheckされたデータを受け取っています。
+    if Relationship.destroy(checked_data)
+      redirect_to relationships_path
+    else
+      render action: 'index'
+    end
+  end
+
+
   def participated_notification # 参加通知
     @band = Band.find_by(id: @relationship.band_id)
     user_ids = Relationship.where(band_id: @band.id, permission: true).where.not(user_id: current_user.id).select(:user_id)
@@ -75,4 +90,7 @@ class RelationshipsController < ApplicationController
       decline_notification.save if decline_notification.valid?
     end
   end
+
+
+
 end

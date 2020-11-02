@@ -39,4 +39,5 @@
 <%=link_to 'バンド一覧へ戻る', bands_path, class: 'btn btn-info' %>
 <%if @users.any? {|v| v.id.to_i == current_user.id} && Relationship.find_by(user_id: current_user.id, band_id: @band.id).permission == true %>
   <%=link_to 'メンバーを編集する', edit_band_path, class: 'btn btn-primary' %>
-<%end %>
+  <%=link_to 'メンバーを削除する', relationships_path(band_id: @band.id), class: 'btn btn-primary' %>
+<% end %>

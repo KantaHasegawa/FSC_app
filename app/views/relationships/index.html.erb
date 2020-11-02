@@ -1,0 +1,9 @@
+
+<%= form_with url: destroy_all_relationships_path, method: :delete, local: true do |f| %>
+  <% @relationships.each do |relationship| %>
+    <%= User.find(relationship.user_id).name %>
+    <%= relationship.part %>
+    <%= check_box_tag "deletes[#{relationship.id}]", relationship.id %> </br>
+  <% end %>
+  <%= submit_tag "一括削除" %>
+<% end %>

@@ -144,11 +144,11 @@ class SignUp extends React.Component {
         <div class="topandbottom5px">
           <div class="radio">
             <label htmlFor="user_gender_0">
-            <input type="radio" value="0" name="user[gender]" checked="checked" id="user_gender_0" />
+              <input type="radio" value="0" name="user[gender]" checked="checked" id="user_gender_0" />
             男</label></div>
           <div class="radio">
             <label htmlFor="user_gender_1">
-            <input type="radio" value="1" name="user[gender]" id="user_gender_1" />
+              <input type="radio" value="1" name="user[gender]" id="user_gender_1" />
             女</label></div>
         </div>
 
@@ -201,7 +201,7 @@ class SignUp extends React.Component {
         <div class="field">
           <input
             value={this.state.password_confirmation}
-            onChange={(event)=>{this.handlePassword_confirmationChange(event)}}
+            onChange={(event) => { this.handlePassword_confirmationChange(event) }}
             autocomplete="new-password" class="form-control" placeholder="確認用パスワードを入力してください" type="password" name="user[password_confirmation]" id="user_password_confirmation" />
         </div>
         {password_confirmationErrorText}
