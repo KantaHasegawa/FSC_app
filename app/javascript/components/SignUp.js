@@ -5,15 +5,33 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: '',
       email: '',
       password: '',
       participated_at: '',
       password_confirmation: '',
+      name_error: true,
       email_error: true,
       password_error: true,
       participated_at_error: true,
       password_confirmation_error: true,
     };
+  }
+
+  handleNameChange(event) {
+    const inputValue = event.target.value;
+    this.setState({
+      name: inputValue
+    });
+    if (inputValue === '') {
+      this.setState({
+        name_error: true,
+      });
+    } else {
+      this.setState({
+        name_error: false,
+      });
+    }
   }
 
   handleEmailChange(event) {
@@ -82,6 +100,15 @@ class SignUp extends React.Component {
 
   render() {
 
+    let nameErrorText;
+    if (this.state.name_error) {
+      nameErrorText = (
+        <div class="dynamic_error_message">※名前が入力されていません</div>
+      );
+    } else {
+      nameErrorText = '';
+    }
+
     let emailErrorText;
     if (this.state.email_error) {
       emailErrorText = (
@@ -133,7 +160,7 @@ class SignUp extends React.Component {
 
 
     return (
-      <form class="new_user" id="new_user" action="/users/sign_in" enctype="multipart/form-data" accept-charset="UTF-8" method="post">
+      <form class="new_user" id="new_user" action="/users" enctype="multipart/form-data" accept-charset="UTF-8" method="post">
         <input type="hidden" name="authenticity_token" value={this.props.token} />
 
         <div class="field">
@@ -183,10 +210,19 @@ class SignUp extends React.Component {
 
         <div class="field">
           <input
+            value={this.state.name}
+            onChange={(event) => { this.handleNameChange(event) }}
+            placeholder="名前を入力してください"
+            autofocus="autofocus" class="form-control" autocomplete="name" type="name" name="user[name]" id="user_name" />
+        </div>
+        {nameErrorText}
+
+        <div class="field">
+          <input
             value={this.state.email}
             onChange={(event) => { this.handleEmailChange(event) }}
             placeholder="メールアドレスを入力してください"
-            autofocus="autofocus" class="form-control" autocomplete="email" type="email" name="user[email]" id="user_email" />
+            class="form-control" autocomplete="email" type="email" name="user[email]" id="user_email" />
         </div>
         {emailErrorText}
         <div class="field">

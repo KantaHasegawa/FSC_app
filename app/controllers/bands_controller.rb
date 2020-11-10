@@ -11,6 +11,7 @@ class BandsController < ApplicationController
   def new
     @band = Band.new
     @band.relationships.build
+    @collections = User.pluck(:name, :id).unshift(['募集中', 0])
   end
 
   def create

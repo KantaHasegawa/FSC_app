@@ -85,7 +85,7 @@ class EditUser extends React.Component {
     let emailErrorText;
     if (this.state.email_error) {
       emailErrorText = (
-        <div class="dynamic_error_message">※メールアドレスが入力されていません</div>
+        <div className="dynamic_error_message">※メールアドレスが入力されていません</div>
       );
     } else {
       emailErrorText = '';
@@ -94,7 +94,7 @@ class EditUser extends React.Component {
     let passwordErrorText;
     if (this.state.password_error) {
         passwordErrorText = (
-          <div class="dynamic_error_message">※パスワードは英数字6文字以上で入力してください</div>
+          <div className="dynamic_error_message">※パスワードは英数字6文字以上で入力してください</div>
         );
     } else {
       passwordErrorText = '';
@@ -103,7 +103,7 @@ class EditUser extends React.Component {
     let participated_atErrorText;
     if (this.state.participated_at_error) {
       participated_atErrorText = (
-        <div class="dynamic_error_message">※入部年度が入力されていません</div>
+        <div className="dynamic_error_message">※入部年度が入力されていません</div>
       );
     } else {
       participated_atErrorText = '';
@@ -112,7 +112,7 @@ class EditUser extends React.Component {
     let password_confirmationErrorText;
     if (this.state.password_confirmation_error) {
       password_confirmationErrorText = (
-        <div class="dynamic_error_message">※パスワードが一致しません</div>
+        <div className="dynamic_error_message">※パスワードが一致しません</div>
       );
     } else {
       password_confirmationErrorText = '';
@@ -137,31 +137,31 @@ class EditUser extends React.Component {
 
 
     return (
-      <form class="edit_user" id="edit_user" action="/users" accept-charset="UTF-8" method="post">
+      <form className="edit_user" action="/users" acceptCharset="UTF-8" method="post">
         <input type="hidden" name="_method" value="put"></input>
         <input type="hidden" name="authenticity_token" value={this.props.token} />
 
-        <div class="topandbottom5px">
-          <div class="radio">
-            <label htmlFor="user_gender_0">
-              <input type="radio" value="0" name="user[gender]" checked={man} id="user_gender_0" />
+        <div className="topandbottom5px">
+          <div className="radio">
+            <label>
+              <input type="radio" value="0" name="user[gender]" defaultChecked={man} />
             男</label></div>
-          <div class="radio">
-            <label htmlFor="user_gender_1">
-              <input type="radio" value="1" name="user[gender]" checked={woman} id="user_gender_1" />
+          <div className="radio">
+            <label>
+              <input type="radio" value="1" name="user[gender]" defaultChecked={woman} />
             女</label></div>
         </div>
 
-        <div class="field">
-          <select class="form-control" name="user[main_part]" id="user_main_part"><option value="Vo">Vo</option>
+        <div className="field">
+          <select className="form-control" name="user[main_part]"><option value="Vo">Vo</option>
             <option value="Gt">Gt</option>
             <option value="Ba">Ba</option>
             <option value="Dr">Dr</option>
             <option value="Key">Key</option></select>
         </div>
 
-        <div class="field">
-          <select class="form-control" name="user[roll]" id="user_roll"><option value="平部員">平部員</option>
+        <div className="field">
+          <select className="form-control" name="user[roll]"><option value="平部員">平部員</option>
             <option value="平部長">平部長</option>
             <option value="幹事">幹事</option>
             <option value="会計">会計</option>
@@ -173,43 +173,43 @@ class EditUser extends React.Component {
             <option value="次期副部長">次期副部長</option></select>
         </div>
 
-        <div class="field">
+        <div className="field">
           <input
             value={this.state.participated_at}
             onChange={(event) => { this.handleParticipated_atChange(event) }}
-            autofocus="autofocus" class="form-control" placeholder="入部した年を入力してください" type="number" name="user[participated_at]" id="user_participated_at" />
+             className="form-control" placeholder="入部した年を入力してください" type="number" name="user[participated_at]"/>
         </div>
         {participated_atErrorText}
 
-        <div class="field">
+        <div className="field">
           <input
             value={this.state.email}
             onChange={(event) => { this.handleEmailChange(event) }}
             placeholder="メールアドレスを入力してください"
-            autofocus="autofocus" class="form-control" autocomplete="email" type="email" name="user[email]" id="user_email" />
+             className="form-control" type="email" name="user[email]" />
         </div>
         {emailErrorText}
-        <div class="field">
+        <div className="field">
           <input
             value={this.state.password}
             onChange={(event) => { this.handlePasswordChange(event) }}
             placeholder="パスワード(変更しない場合は空)"
-            class="form-control" autocomplete="current-password" type="password" name="user[password]" id="user_password" />
+            className="form-control"type="password" name="user[password]"/>
         </div>
         {passwordErrorText}
 
-        <div class="field">
+        <div className="field">
           <input
             value={this.state.password_confirmation}
             onChange={(event) => { this.handlePassword_confirmationChange(event) }}
-            autocomplete="new-password" class="form-control" placeholder="確認用パスワード(変更しない場合は空)" type="password" name="user[password_confirmation]" id="user_password_confirmation" />
+            className="form-control" placeholder="確認用パスワード(変更しない場合は空)" type="password" name="user[password_confirmation]" />
         </div>
         {password_confirmationErrorText}
 
-        <div class="action">
+        <div className="action">
           <input
             disabled={this.state.email_error || this.state.password_error || this.state.participated_at_error || this.state.password_confirmation_error}
-            type="submit" name="commit" value="変更する" class="btn btn-lg btn-warning btn-block" data-disable-with="変更する" />
+            type="submit" name="commit" value="変更する" className="btn btn-lg btn-warning btn-block"/>
         </div>
       </form>
     );
