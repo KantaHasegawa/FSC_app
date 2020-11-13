@@ -31,7 +31,7 @@ class Confirmation extends React.Component {
     let emailErrorText;
     if (this.state.email_error) {
       emailErrorText = (
-        <div class="dynamic_error_message">※メールアドレスが入力されていません</div>
+        <div className="dynamic_error_message">※メールアドレスが入力されていません</div>
       );
     } else {
       emailErrorText = '';
@@ -39,22 +39,22 @@ class Confirmation extends React.Component {
 
 
     return (
-      <form class="new_user" id="new_user" action="/users/confirmation" accept-charset="UTF-8" method="post">
+      <form className="new_user" action="/users/confirmation" accept-charset="UTF-8" method="post">
         <input type="hidden" name="authenticity_token" value={this.props.token} />
 
-        <div class="field">
+        <div className="field">
           <input
             value={this.state.email}
             onChange={(event) => { this.handleEmailChange(event) }}
             placeholder="メールアドレスを入力してください"
-            autofocus="autofocus" class="form-control" autocomplete="email" type="email" name="user[email]" id="user_email" />
+            className="form-control" type="email" name="user[email]"/>
         </div>
         {emailErrorText}
 
-        <div class="action">
+        <div className="action">
           <input
             disabled={this.state.email_error}
-            type="submit" name="commit" value="送信する" class="btn btn-lg btn-warning btn-block" data-disable-with="送信する" />
+            type="submit" name="commit" value="送信する" className="btn btn-lg btn-warning btn-block"/>
         </div>
       </form>
     );

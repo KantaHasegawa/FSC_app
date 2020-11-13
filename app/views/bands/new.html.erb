@@ -1,5 +1,5 @@
 <h1>バンドを作成する</h1>
 <div class="col-md-6 col-md-offset-3">
-<%= react_component("BandCreate",token: form_authenticity_token, collections: @collections) %>
+<%= react_component("BandCreate",token: form_authenticity_token, current_user_id: current_user.id.to_s, collections: @collections) %>
 <%= link_to 'キャンセル', @band, class: 'btn btn-info' %> <br>
 </div>
