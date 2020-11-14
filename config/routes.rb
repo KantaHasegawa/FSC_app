@@ -2,9 +2,12 @@
 
 Rails.application.routes.draw do
   get 'notifications/index'
+  # get "/bands/:id/invitation" => 'bands#invitation'
   devise_for :users, controllers: { registrations: 'users/registrations' }
   resources :users, only: %i[index show]
-  resources :bands
+  resources :bands do
+    get 'invitation' , on: :member
+  end
   resources :notifications, only: %i[index]
   resources :relationships, only: %i[index] do
     collection do

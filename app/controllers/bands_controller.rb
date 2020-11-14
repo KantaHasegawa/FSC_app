@@ -35,15 +35,38 @@ class BandsController < ApplicationController
 
   def edit
     @band = Band.find(params[:id])
+    members = Relationship.where(band_id: @band.id)
+    @members = members.map do |member|
+      if member.user_id == 0
+        name = "募集中"
+      else
+        name = User.find(member.user_id).name
+      end
+      new_member = member.attributes
+      new_member.store("name", name)
+      a= "a"
+      new_member
+    end
+  end
+
+  def invitation
+    @collections = User.pluck(:name, :id).unshift(['募集中', 0])
+    @band = Band.find(params[:id])
     @members = @band.users
+    @members.each do |i|
+      if i.id != 0
+      @collections.delete([i.name, i.id])
+      end
+    end
     are_you_member?
   end
 
   def update
     @band = Band.find(params[:id])
-    update_permission_and_destroy_check
+    @band.update(band_params)
+    # update_permission_and_destroy_check
     if @band.save
-      notifications
+      # notifications
       if @band.users.any? # update時にメンバーが存在しなかった場合バンドを削除する
         redirect_to @band
         flash[:notice] = 'バンド情報の編集に成功しました'

@@ -30,7 +30,6 @@ gem 'ransack'
 gem 'react-rails', '2.5.0'
 gem 'sass-rails', '6.0.0'
 gem 'select2-rails'
-gem 'turbolinks', '5.2.1'
 gem 'webpacker', '4.2.2'
 
 group :development, :test do
