@@ -1,5 +1,4 @@
 <%visitor = notification.visitor %>
-<%optional = notification.optional %>
 <% relationship = Relationship.find_by(user_id: current_user.id, band_id: notification.band.id) if notification.band_id%>
 <img src=<%= visitor.image %> alt class = "icon_image">
 <%=link_to visitor.name, visitor %>さんが
@@ -15,28 +14,8 @@
 <%else %>
   <p class="btn btn-info btn-xs" disabled="disabled">参加済み</p>
 <%end %>
-<%when 'invitation_other' then %>
-<%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>に<%=link_to optional.name, optional %>さんを招待しました
-<%when 'cancel' then%>
-あなたへの招待をキャンセルしました
-(<%= link_to notification.band.name, notification.band %>)
-<%when 'cancel_other' then %>
-<%=link_to optional.name, optional %>さんへの招待をキャンセルしました
-(<%= link_to notification.band.name, notification.band %>)
-<%when 'quit' then %>
-あなたを<%= link_to notification.band.name, notification.band %>から除名しました
-<%when 'quit_other' %>
-<%if visitor.id == optional.id %>
-  <%= link_to notification.band.name, notification.band %>を退会しました
-<%else %>
-  <%= link_to notification.band.name, notification.band %>から<%=link_to optional.name, optional %>さんを除名しました
-<%end %>
 <%when 'participated' then%>
 <%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>に参加しました
-<%when 'decline' then%>
-<%= link_to notification.band.name, notification.band %>への招待を拒否しました
-<%when 'band_destroy' then %>
-<%= notification.destroy_band %>を削除しました
 <%end %>
-<%=time_ago_in_words(notification.created_at).upcase %>
+<%= "#{time_ago_in_words(notification.created_at).upcase}前" %>
 <br>

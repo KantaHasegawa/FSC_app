@@ -180,11 +180,11 @@ class SignUp extends React.Component {
         </div>
 
         <div class="field">
-          <select class="form-control" name="user[main_part]" id="user_main_part"><option value="Vo">Vo</option>
-            <option value="Gt">Gt</option>
-            <option value="Ba">Ba</option>
-            <option value="Dr">Dr</option>
-            <option value="Key">Key</option></select>
+          <select class="form-control" name="user[main_part]" id="user_main_part"><option value="Vocal">Vocal</option>
+            <option value="Guitar">Guitar</option>
+            <option value="Bass">Bass</option>
+            <option value="Drums">Drums</option>
+            <option value="Keyboard">Keyboard</option></select>
         </div>
 
         <div class="field">
