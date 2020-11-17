@@ -67,7 +67,7 @@ class Invitation extends React.Component {
     return (
       <form
         enctype="multipart/form-data"
-        action={`/bands/${this.props.band_id}`}
+        action={`/bands/${this.props.band_id}/invitation_update`}
         accept-charset="UTF-8"
         method="post"
       >

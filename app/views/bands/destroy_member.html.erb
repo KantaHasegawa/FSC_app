@@ -1,0 +1,12 @@
+<%= form_with url:  destroy_member_delete_band_path, method: :delete, local: true do |f| %>
+  <% @members.each do |member| %>
+  <% if member.user_id == 0 %>
+    募集中
+  <% else%>
+    <%= User.find(member.user_id).name %>
+  <%end%>
+  <%= member.part %>
+  <%= check_box_tag "deletes[#{member.id}]", member.id %> </br>
+  <% end %>
+  <%= submit_tag "一括削除" %>
+<% end %>

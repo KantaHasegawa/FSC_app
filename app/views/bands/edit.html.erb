@@ -1,7 +1,6 @@
 <h1>編集する</h1>
 <div class="col-md-6 col-md-offset-3">
-  <%= react_component("BandEdit",token: form_authenticity_token, band_id: params[:id], band_name: @band.name, members: @members ) %>
-  <%= link_to 'キャンセル', @band, class: 'btn btn-info' %> <br>
+  <%= react_component("BandEdit",token: form_authenticity_token, band_id: params[:id], band_name: @band.name, band_image: @band.image, members: @members ) %>
+  <%= link_to 'キャンセル', @band, class: 'btn btn-info' %>
+  <%= link_to "バンドを削除する", @band, method: :delete, data: {confirm: "本当によろしいですか？"}, class: 'btn btn-danger' %>
 </div>
-<p></p>
-<%= link_to "バンドを削除する", @band, method: :delete, data: {confirm: "本当によろしいですか？"}, class: 'btn btn-danger' %>

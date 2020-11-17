@@ -6,22 +6,24 @@ class EditUser extends React.Component {
     super(props);
     this.state = {
       email: this.props.user.email,
-      password: '',
+      password: "",
       participated_at: this.props.user.participated_at,
-      password_confirmation: '',
+      password_confirmation: "",
       email_error: false,
       password_error: false,
       participated_at_error: false,
       password_confirmation_error: false,
+      image_form: false,
     };
+      this.handleChangeImageForm = this.handleChangeImageForm.bind(this);
   }
 
   handleEmailChange(event) {
     const inputValue = event.target.value;
     this.setState({
-      email: inputValue
+      email: inputValue,
     });
-    if (inputValue === '') {
+    if (inputValue === "") {
       this.setState({
         email_error: true,
       });
@@ -35,39 +37,39 @@ class EditUser extends React.Component {
   handlePasswordChange(event) {
     const inputValue = event.target.value;
     this.setState({
-      password: inputValue
+      password: inputValue,
     });
-    if (1 <= inputValue.length　&& inputValue.length < 6) {
+    if (1 <= inputValue.length && inputValue.length < 6) {
       this.setState({
         password_error: true,
       });
     } else {
       this.setState({
         password_error: false,
-      })
+      });
     }
   }
 
   handleParticipated_atChange(event) {
     const inputValue = event.target.value;
     this.setState({
-      participated_at: inputValue
+      participated_at: inputValue,
     });
-    if (inputValue === '') {
+    if (inputValue === "") {
       this.setState({
         participated_at_error: true,
       });
     } else {
       this.setState({
         participated_at_error: false,
-      })
+      });
     }
   }
 
   handlePassword_confirmationChange(event) {
     const inputValue = event.target.value;
     this.setState({
-      password_confirmation: inputValue
+      password_confirmation: inputValue,
     });
     if (inputValue != this.state.password) {
       this.setState({
@@ -76,37 +78,49 @@ class EditUser extends React.Component {
     } else {
       this.setState({
         password_confirmation_error: false,
-      })
+      });
     }
   }
 
-  render() {
+  handleChangeImageForm() {
+    let image_form = !this.state.image_form;
+    this.setState({
+      image_form: image_form,
+    });
+  }
 
+  render() {
     let emailErrorText;
     if (this.state.email_error) {
       emailErrorText = (
-        <div className="dynamic_error_message">※メールアドレスが入力されていません</div>
+        <div className="dynamic_error_message">
+          ※メールアドレスが入力されていません
+        </div>
       );
     } else {
-      emailErrorText = '';
+      emailErrorText = "";
     }
 
     let passwordErrorText;
     if (this.state.password_error) {
-        passwordErrorText = (
-          <div className="dynamic_error_message">※パスワードは英数字6文字以上で入力してください</div>
-        );
+      passwordErrorText = (
+        <div className="dynamic_error_message">
+          ※パスワードは英数字6文字以上で入力してください
+        </div>
+      );
     } else {
-      passwordErrorText = '';
+      passwordErrorText = "";
     }
 
     let participated_atErrorText;
     if (this.state.participated_at_error) {
       participated_atErrorText = (
-        <div className="dynamic_error_message">※入部年度が入力されていません</div>
+        <div className="dynamic_error_message">
+          ※入部年度が入力されていません
+        </div>
       );
     } else {
-      participated_atErrorText = '';
+      participated_atErrorText = "";
     }
 
     let password_confirmationErrorText;
@@ -115,53 +129,103 @@ class EditUser extends React.Component {
         <div className="dynamic_error_message">※パスワードが一致しません</div>
       );
     } else {
-      password_confirmationErrorText = '';
+      password_confirmationErrorText = "";
     }
 
-    let man
+    let man;
     if (this.props.user.gender == 0) {
       man = true;
     } else {
       man = false;
     }
 
-    let woman
+    let woman;
     if (this.props.user.gender == 1) {
       woman = true;
     } else {
       woman = false;
     }
 
+    let image_button_message;
+    let image_form;
 
-
-
+    if (this.state.image_form) {
+      image_button_message = "画像を変更しない";
+      image_form = (
+        <input
+          type="file"
+          accept="image/jpeg,image/png"
+          name="user[image]"
+        ></input>
+      );
+    } else {
+      image_button_message = "画像を変更する";
+      image_form = "";
+    }
 
     return (
-      <form className="edit_user" action="/users" acceptCharset="UTF-8" method="post">
+      <form
+        className="edit_user"
+        action="/users"
+        acceptCharset="UTF-8"
+        method="post"
+        enctype="multipart/form-data"
+      >
         <input type="hidden" name="_method" value="put"></input>
-        <input type="hidden" name="authenticity_token" value={this.props.token} />
+        <input
+          type="hidden"
+          name="authenticity_token"
+          value={this.props.token}
+        />
+
+        {image_form}
+
+        <button type="button" onClick={this.handleChangeImageForm}>
+          {image_button_message}
+        </button>
 
         <div className="topandbottom5px">
           <div className="radio">
             <label>
-              <input type="radio" value="0" name="user[gender]" defaultChecked={man} />
-            男</label></div>
+              <input
+                type="radio"
+                value="0"
+                name="user[gender]"
+                defaultChecked={man}
+              />
+              男
+            </label>
+          </div>
           <div className="radio">
             <label>
-              <input type="radio" value="1" name="user[gender]" defaultChecked={woman} />
-            女</label></div>
+              <input
+                type="radio"
+                value="1"
+                name="user[gender]"
+                defaultChecked={woman}
+              />
+              女
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <select
+            class="form-control"
+            name="user[main_part]"
+            id="user_main_part"
+          >
+            <option value="Vocal">Vocal</option>
+            <option value="Guitar">Guitar</option>
+            <option value="Bass">Bass</option>
+            <option value="Drums">Drums</option>
+            <option value="Keyboard">Keyboard</option>
+          </select>
         </div>
 
         <div className="field">
-          <select className="form-control" name="user[main_part]"><option value="Vo">Vo</option>
-            <option value="Gt">Gt</option>
-            <option value="Ba">Ba</option>
-            <option value="Dr">Dr</option>
-            <option value="Key">Key</option></select>
-        </div>
-
-        <div className="field">
-          <select className="form-control" name="user[roll]"><option value="平部員">平部員</option>
+          <select className="form-control" name="user[roll]">
+            <option value="平部員">平部員</option>
             <option value="平部長">平部長</option>
             <option value="幹事">幹事</option>
             <option value="会計">会計</option>
@@ -170,46 +234,78 @@ class EditUser extends React.Component {
             <option value="部長">部長</option>
             <option value="副部長">副部長</option>
             <option value="次期部長">次期部長</option>
-            <option value="次期副部長">次期副部長</option></select>
+            <option value="次期副部長">次期副部長</option>
+          </select>
         </div>
 
         <div className="field">
           <input
             value={this.state.participated_at}
-            onChange={(event) => { this.handleParticipated_atChange(event) }}
-             className="form-control" placeholder="入部した年を入力してください" type="number" name="user[participated_at]"/>
+            onChange={(event) => {
+              this.handleParticipated_atChange(event);
+            }}
+            className="form-control"
+            placeholder="入部した年を入力してください"
+            type="number"
+            name="user[participated_at]"
+          />
         </div>
         {participated_atErrorText}
 
         <div className="field">
           <input
             value={this.state.email}
-            onChange={(event) => { this.handleEmailChange(event) }}
+            onChange={(event) => {
+              this.handleEmailChange(event);
+            }}
             placeholder="メールアドレスを入力してください"
-             className="form-control" type="email" name="user[email]" />
+            className="form-control"
+            type="email"
+            name="user[email]"
+          />
         </div>
         {emailErrorText}
         <div className="field">
           <input
             value={this.state.password}
-            onChange={(event) => { this.handlePasswordChange(event) }}
+            onChange={(event) => {
+              this.handlePasswordChange(event);
+            }}
             placeholder="パスワード(変更しない場合は空)"
-            className="form-control"type="password" name="user[password]"/>
+            className="form-control"
+            type="password"
+            name="user[password]"
+          />
         </div>
         {passwordErrorText}
 
         <div className="field">
           <input
             value={this.state.password_confirmation}
-            onChange={(event) => { this.handlePassword_confirmationChange(event) }}
-            className="form-control" placeholder="確認用パスワード(変更しない場合は空)" type="password" name="user[password_confirmation]" />
+            onChange={(event) => {
+              this.handlePassword_confirmationChange(event);
+            }}
+            className="form-control"
+            placeholder="確認用パスワード(変更しない場合は空)"
+            type="password"
+            name="user[password_confirmation]"
+          />
         </div>
         {password_confirmationErrorText}
 
         <div className="action">
           <input
-            disabled={this.state.email_error || this.state.password_error || this.state.participated_at_error || this.state.password_confirmation_error}
-            type="submit" name="commit" value="変更する" className="btn btn-lg btn-warning btn-block"/>
+            disabled={
+              this.state.email_error ||
+              this.state.password_error ||
+              this.state.participated_at_error ||
+              this.state.password_confirmation_error
+            }
+            type="submit"
+            name="commit"
+            value="変更する"
+            className="btn btn-lg btn-warning btn-block"
+          />
         </div>
       </form>
     );

@@ -1,5 +1,6 @@
 <h1>バンド詳細</h1>
 <h2><img src=<%= @band.image %> alt class = "icon_image"><%= @band.name %></h2>
+
 <table class="table table-striped table-bordered">
   <thead >
     <tr>
@@ -40,5 +41,5 @@
 <%if @users.any? {|v| v.id.to_i == current_user.id} && Relationship.find_by(user_id: current_user.id, band_id: @band.id).permission == true %>
   <%=link_to '編集する', edit_band_path, class: 'btn btn-primary' %>
   <%=link_to 'メンバーを招待する', invitation_band_path, class: 'btn btn-primary' %>
-  <%=link_to 'メンバーを削除する', relationships_path(band_id: @band.id), class: 'btn btn-primary' %>
+  <%=link_to 'メンバーを削除する', destroy_member_band_path, class: 'btn btn-primary' %>
 <% end %>

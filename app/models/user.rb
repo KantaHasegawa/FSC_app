@@ -4,10 +4,10 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable
+  :recoverable, :rememberable, :validatable, :confirmable
   mount_uploader :image, ImageUploader
   VALID_PASSWORD_REGEX = /\A[a-z0-9]+\z/i.freeze
-  MAIN_PART_VALUE = %w[Vo Gt Ba Dr Key].freeze
+  MAIN_PART_VALUE = %w[Vocal Guitar Bass Drums Keyboard].freeze
   ROLL_VALUE = %w[平部員 平部長 幹事 会計 渉外 機材 部長 副部長 次期部長 次期副部長].freeze
   validates :password, length: { in: 6..128 }, format: { with: VALID_PASSWORD_REGEX }, on: :create
   validates :password, length: { in: 6..128 }, format: { with: VALID_PASSWORD_REGEX }, on: :update, allow_blank: true

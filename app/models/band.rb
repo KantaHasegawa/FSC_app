@@ -7,33 +7,37 @@ class Band < ApplicationRecord
   has_many :users, through: :relationships
   has_many :notifications, dependent: :destroy
   accepts_nested_attributes_for :relationships, allow_destroy: true
-  # before_validation :user_ids_be_uniq
-  # before_validation :parts_be_uniq
 
-  # メソッド
-  # def user_ids_be_uniq
-    # resource_be_uniq(relationships, :user_id)
-  # end
 
-  # def parts_be_uniq
-    # resource_be_uniq(relationships, :part)
-  # end
 
-  # DB保存前にparamsを参照し一意性を検証する
-  # def resource_be_uniq(collection, attribute_name)
-    # success = true
-    # uniq = []
-    # collection.each do |m|
-      # 削除されるレコードの一意性は検証しなくてよい (例 削除=>伊藤,Gt1 追加=>佐藤,Gt1 だった場合レコードにGt1が共存するわけではないので通してよい)
-      # unless m['destroy_check'] == true
-        # if uniq.include?(m[attribute_name])
-          # errors.add(:base, 'メンバーまたはパートが重複しています')
-          # success = false
-        # elsif m[attribute_name] != 0 # user_id = 0(募集中)は複数存在して良い
-          # uniq << m[attribute_name]
-        # end
-      # end
-    # end
-    # success
-  # end
+  def invitation_notification(invitation_users, current_user)
+    invitation_users.each do |v|
+      visited_user_id = v[1]['user_id'].to_i
+      if visited_user_id == 0 || visited_user_id == current_user.id
+        next
+      else
+        invitation_notification = current_user.active_notifications.new(
+          band_id: id,
+          visited_id: visited_user_id,
+          relationship_id: Relationship.find_by(band_id: id, user_id: visited_user_id).id,
+          action: 'invitation'
+        )
+        invitation_notification.save if invitation_notification.valid?
+      end
+    end
+  end
+
+  def participated_notification(relationship, current_user) # 参加通知
+    user_ids = Relationship.where(band_id: id, permission: true).where.not(user_id: current_user.id).select(:user_id)
+    members = User.where(id: user_ids) # 招待を承認済みかつ自分を覗いたバンドメンバーに通知を送る
+    members.each do |member|
+      participated_notification = current_user.active_notifications.new(
+        band_id: id,
+        visited_id: member.id,
+        relationship_id: relationship.id,
+        action: 'participated'
+      )
+      participated_notification.save if participated_notification.valid?
+    end
+  end
 end

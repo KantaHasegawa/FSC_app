@@ -66,12 +66,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # protected
   private
 
-  def are_you_true_person?
-    unless @user.id == current_user.id
-      redirect_to root_path
-      flash[:alert] = '権限がありません'
-    end
-  end
 
   def update_resource(resource, params)
     resource.update_without_password(params)
