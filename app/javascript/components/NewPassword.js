@@ -54,7 +54,7 @@ class NewPassword extends React.Component {
         <div class="action">
           <input
             disabled={this.state.email_error || this.state.password_error}
-            type="submit" name="commit" value="送信する" class="btn btn-lg btn-warning btn-block" data-disable-with="送信する" />
+            type="submit" name="commit" value="送信する" class="btn  btn-primary btn-block" data-disable-with="送信する" />
         </div>
       </form>
     );

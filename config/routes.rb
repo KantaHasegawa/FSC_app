@@ -6,14 +6,14 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'users/registrations' }
   resources :users, only: %i[index show]
   resources :bands do
-    get 'invitation' , on: :member
-  end
-  resources :notifications, only: %i[index]
-  resources :relationships, only: %i[index] do
-    collection do
-      delete 'destroy_all'
+    member do
+      get 'invitation'
+      patch 'invitation_update'
+      get 'destroy_member'
+      delete 'destroy_member_delete'
     end
   end
+  resources :notifications, only: %i[index]
   get '/users/sign_out' => 'devise/sessions#destroy'
   root to: 'static_pages#home'
   get 'static_pages/help'

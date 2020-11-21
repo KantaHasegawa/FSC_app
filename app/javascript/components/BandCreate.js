@@ -115,57 +115,128 @@ class BandCreate extends React.Component {
     }
 
     return (
-      <form enctype="multipart/form-data" action="/bands" accept-charset="UTF-8" method="post">
-        <input type="hidden" name="authenticity_token" value={this.props.token}></input>
-        <h3>皆が使いやすいようにバンド名は正式名称で入力してください</h3>
-
-          {name_error_message}
-          {not_found_current_user_error_message}
-          {user_dupulicate_error_message}
-
-        <label>バンド名を入力</label>
+      <form
+        enctype="multipart/form-data"
+        action="/bands"
+        accept-charset="UTF-8"
+        method="post"
+      >
         <input
-          onChange={(event) => { this.handleChangeName(event)}}
-          type="text" name="band[name]" />
+          type="hidden"
+          name="authenticity_token"
+          value={this.props.token}
+        ></input>
+
+        {name_error_message}
+        {not_found_current_user_error_message}
+        {user_dupulicate_error_message}
+        <p></p>
         <div className="field">
-          <label>画像</label>
+          <label>画像</label> <br/>
           <input type="file" name="band[image]" id="band_image" />
         </div>
 
-        {this.state.forms.map((form) =>
+        <label className="label-margin">バンド名を入力</label>
+        <input
+          onChange={(event) => {
+            this.handleChangeName(event);
+          }}
+          type="text"
+          name="band[name]"
+          class="form-control"
+        />
+
+        <div className="row">
+          <div className="col"></div>
+          <div className="col"></div>
+        </div>
+
+        {this.state.forms.map((form) => (
           <span key={form.toString()}>
             <div className="nested-fields">
-              <label>メンバー名</label>
-              <select
-                onClick={this.handleSelectValidation}
-                name={`band[relationships_attributes][${form}][user_id]`}
-                id={`band[relationships_attributes][${form}][user_id]`}>
-                {this.props.collections.map(collection => <option key={collection[1].toString()} value={collection[1]}>{collection[0]}</option>)}
-              </select>
-              <label>パート</label>
-              <select name={`band[relationships_attributes][${form}][part]`}>
-                <option value="Vocal">Vocal</option>
-                <option value="Guitar&Vocal">Guitar&Vocal</option>
-                <option value="Bass&Vocal">Bass&Vocal</option>
-                <option value="LeadGuitar">LeadGuitar</option>
-                <option value="RhythmGuitar">RhythmGuitar</option>
-                <option value="Bass">Bass</option>
-                <option value="Drums">Drums</option>
-                <option value="Keyboard">Keyboard</option>
-                <option value="その他">その他</option>
-              </select>
-              <input value="false" type="hidden" name={`band[relationships_attributes][${form}][permission]`} id={`band[relationships_attributes][${form}][permission]`} />
-              <input value="false" type="hidden" name={`band[relationships_attributes][${form}][_destroy]`} />
+              <div className="row">
+                <div className="col">
+                  <label className="label-margin">メンバー名</label>
+                  <select
+                    onClick={this.handleSelectValidation}
+                    className="form-control"
+                    name={`band[relationships_attributes][${form}][user_id]`}
+                    id={`band[relationships_attributes][${form}][user_id]`}
+                  >
+                    {this.props.collections.map((collection) => (
+                      <option
+                        key={collection[1].toString()}
+                        value={collection[1]}
+                      >
+                        {collection[0]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="col">
+                  {" "}
+                  <label className="label-margin">パート</label>
+                  <select
+                    name={`band[relationships_attributes][${form}][part]`}
+                    className="form-control"
+                  >
+                    <option value="Vocal">Vocal</option>
+                    <option value="Guitar&Vocal">Guitar&Vocal</option>
+                    <option value="Bass&Vocal">Bass&Vocal</option>
+                    <option value="LeadGuitar">LeadGuitar</option>
+                    <option value="RhythmGuitar">RhythmGuitar</option>
+                    <option value="Bass">Bass</option>
+                    <option value="Drums">Drums</option>
+                    <option value="Keyboard">Keyboard</option>
+                    <option value="その他">その他</option>
+                  </select>
+                </div>
+              </div>
+
+              <input
+                value="false"
+                type="hidden"
+                name={`band[relationships_attributes][${form}][permission]`}
+                id={`band[relationships_attributes][${form}][permission]`}
+              />
+              <input
+                value="false"
+                type="hidden"
+                name={`band[relationships_attributes][${form}][_destroy]`}
+              />
             </div>
           </span>
-        )}
-        < button type="button" disabled={count > 8} onClick={this.handleAddForm}>メンバーを追加</button>
-        <button type="button" disabled={count < 1} onClick={this.handleDeleteForm}>メンバーを削除</button>
+        ))}
+        <button
+          type="button"
+          className="btn btn-secondary btn-sm"
+          disabled={count > 8}
+          onClick={this.handleAddForm}
+        >
+          メンバーを追加
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary btn-sm"
+          disabled={count < 1}
+          onClick={this.handleDeleteForm}
+        >
+          メンバーを削除
+        </button>
+
         <input
           onClick={this.handleClickSubmit}
-          disabled={this.state.name_error || this.state.user_duplicate_error || this.state.not_found_current_user_error}
-          type="submit" name="commit" value="確定する" data-confirm="本当によろしいですか？" className="btn btn-primary">
-        </input>
+          disabled={
+            this.state.name_error ||
+            this.state.user_duplicate_error ||
+            this.state.not_found_current_user_error
+          }
+          type="submit"
+          name="commit"
+          value="確定する"
+          data-confirm="本当によろしいですか？"
+          className="btn btn-primary btn-block"
+        ></input>
       </form>
     );
   }

@@ -1,21 +1,22 @@
 <%visitor = notification.visitor %>
 <% relationship = Relationship.find_by(user_id: current_user.id, band_id: notification.band.id) if notification.band_id%>
-<img src=<%= visitor.image %> alt class = "icon_image">
-<%=link_to visitor.name, visitor %>さんが
-<%if notification.band %>
-  <img src=<%= notification.band.image %> alt class = "icon_image">
-<%end %>
-<%case notification.action %>
-<%when 'invitation' then%>
-あなたを<%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>に招待しました
-<%if relationship.permission == false %>
-  <%=link_to "参加する","/relationships/#{relationship.id}", method: :post, class: "btn btn-primary btn-xs" %>
-  <%=link_to "拒否する","/relationships/#{relationship.id}", method: :delete, class: "btn btn-danger btn-xs"  %>
-<%else %>
-  <p class="btn btn-info btn-xs" disabled="disabled">参加済み</p>
-<%end %>
-<%when 'participated' then%>
-<%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>に参加しました
-<%end %>
-<%= "#{time_ago_in_words(notification.created_at).upcase}前" %>
-<br>
+
+  <div class="list-group-item flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <div>
+      <img src=<%= visitor.image %> alt class = "img-thumbnail">
+      <img src=<%= notification.band.image %> alt class = "img-thumbnail">
+      </div>
+      <small><%= "#{time_ago_in_words(notification.created_at).upcase}前" %></small>
+    </div>
+      <%case notification.action %>
+        <%when 'invitation' then%>
+          <h5><%=link_to visitor.name, visitor %>さんがあなたを<%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>に招待しました</h5>
+            <%if relationship.permission == false %>
+              <%=link_to "参加する","/relationships/#{relationship.id}", method: :post, class: "btn btn-primary btn-sm" %>
+              <%=link_to "拒否する","/relationships/#{relationship.id}", method: :delete, class: "btn btn-danger btn-sm"  %>
+            <%end %>
+        <%when 'participated' then%>
+          <h5><%=link_to visitor.name, visitor %>さんが<%= link_to notification.band.name, notification.band %><%="の#{relationship.part}" if relationship%>に参加しました</h5>
+        <%end %>
+    </div>

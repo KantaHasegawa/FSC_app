@@ -5,17 +5,35 @@ class EditUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: this.props.user.name,
       email: this.props.user.email,
       password: "",
       participated_at: this.props.user.participated_at,
       password_confirmation: "",
+      name_error: false,
       email_error: false,
       password_error: false,
       participated_at_error: false,
       password_confirmation_error: false,
       image_form: false,
     };
-      this.handleChangeImageForm = this.handleChangeImageForm.bind(this);
+    this.handleChangeImageForm = this.handleChangeImageForm.bind(this);
+  }
+
+  handleNameChange(event) {
+    const inputValue = event.target.value;
+    this.setState({
+      name: inputValue,
+    });
+    if (inputValue === "") {
+      this.setState({
+        name_error: true,
+      });
+    } else {
+      this.setState({
+        name_error: false,
+      });
+    }
   }
 
   handleEmailChange(event) {
@@ -55,7 +73,7 @@ class EditUser extends React.Component {
     this.setState({
       participated_at: inputValue,
     });
-    if (inputValue === "") {
+    if (inputValue < 1969 || 2050 < inputValue) {
       this.setState({
         participated_at_error: true,
       });
@@ -90,6 +108,16 @@ class EditUser extends React.Component {
   }
 
   render() {
+
+        let nameErrorText;
+        if (this.state.name_error) {
+          nameErrorText = (
+            <div class="dynamic_error_message">※名前が入力されていません</div>
+          );
+        } else {
+          nameErrorText = "";
+        }
+
     let emailErrorText;
     if (this.state.email_error) {
       emailErrorText = (
@@ -178,11 +206,15 @@ class EditUser extends React.Component {
           value={this.props.token}
         />
 
-        {image_form}
-
-        <button type="button" onClick={this.handleChangeImageForm}>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onClick={this.handleChangeImageForm}
+        >
           {image_button_message}
         </button>
+
+        {image_form}
 
         <div className="topandbottom5px">
           <div className="radio">
@@ -208,6 +240,22 @@ class EditUser extends React.Component {
             </label>
           </div>
         </div>
+
+        <div class="field">
+          <input
+            value={this.state.name}
+            onChange={(event) => {
+              this.handleNameChange(event);
+            }}
+            placeholder="名前を入力してください"
+            class="form-control"
+            autocomplete="name"
+            type="name"
+            name="user[name]"
+            id="user_name"
+          />
+        </div>
+        {nameErrorText}
 
         <div class="field">
           <select
@@ -296,6 +344,7 @@ class EditUser extends React.Component {
         <div className="action">
           <input
             disabled={
+              this.state.name_error ||
               this.state.email_error ||
               this.state.password_error ||
               this.state.participated_at_error ||
@@ -304,7 +353,7 @@ class EditUser extends React.Component {
             type="submit"
             name="commit"
             value="変更する"
-            className="btn btn-lg btn-warning btn-block"
+            className="btn btn-primary btn-block"
           />
         </div>
       </form>

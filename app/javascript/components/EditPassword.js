@@ -97,7 +97,7 @@ class EditPassword extends React.Component {
         <div class="action">
           <input
             disabled={this.state.password_error || this.state.password_confirmation_error}
-            type="submit" name="commit" value="パスワードを変更する" class="btn btn-lg btn-warning btn-block" data-disable-with="パスワードを変更する" />
+            type="submit" name="commit" value="パスワードを変更する" class="btn  btn-primary btn-block" data-disable-with="パスワードを変更する" />
         </div>
       </form>
     );

@@ -32,7 +32,7 @@ class BandsController < ApplicationController
       flash[:notice] = 'バンドの登録に成功しました'
     else
       flash[:alert] = 'バンドの登録に失敗しました'
-      render 'new'
+      redirect_to new_band_path
     end
   end
 
@@ -58,7 +58,7 @@ class BandsController < ApplicationController
       redirect_to @band
       flash[:notice] = 'バンド情報の編集に成功しました'
     else
-      render 'edit'
+      redirect_to edit_band_path
       flash[:alert] = 'バンド情報の編集に失敗しました'
     end
   end
@@ -79,10 +79,10 @@ class BandsController < ApplicationController
     if @band.save
       @band.invitation_notification(band_params['relationships_attributes'], current_user)
       redirect_to @band
-      flash[:notice] = 'バンド情報の編集に成功しました'
+      flash[:notice] = '招待に成功しました'
     else
-      render 'edit'
-      flash[:alert] = 'バンド情報の編集に失敗しました'
+      redirect_to invitation_band_path
+      flash[:alert] = '招待に失敗しました'
     end
   end
 
@@ -98,8 +98,10 @@ class BandsController < ApplicationController
     if Relationship.destroy(checked_data)
       @band.destroy unless @band.users
       redirect_to @band
+      flash[:notice] = 'メンバーが存在しないためバンドを削除しました'
     else
-      render @band
+      redirect_to  @band
+      flash[:notice] = 'メンバーの削除に成功しました'
     end
   end
 
@@ -107,9 +109,9 @@ class BandsController < ApplicationController
     @band = Band.find(params[:id])
     if @band.destroy
       redirect_to bands_path
-      flash[:notice] = '削除に成功しました'
+      flash[:notice] = 'バンドの削除に成功しました'
     else
-      flash[:alert] = '削除に失敗しました'
+      flash[:alert] = 'バンドの削除に失敗しました'
       render @band
     end
   end

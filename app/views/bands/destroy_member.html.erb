@@ -1,12 +1,41 @@
-<%= form_with url:  destroy_member_delete_band_path, method: :delete, local: true do |f| %>
+<div class="col">
+<div class="account-wall">
+    <div class="chase-logo">
+      <h1 class="text-center login-title top-interval">メンバーを削除する</h1>
+      <p class="text-center normal-text ">削除するメンバーを選択してください</p>
+    </div>
+      <%= form_with url:  destroy_member_delete_band_path, method: :delete, local: true do |f| %>
   <% @members.each do |member| %>
-  <% if member.user_id == 0 %>
-    募集中
-  <% else%>
-    <%= User.find(member.user_id).name %>
-  <%end%>
-  <%= member.part %>
-  <%= check_box_tag "deletes[#{member.id}]", member.id %> </br>
-  <% end %>
-  <%= submit_tag "一括削除" %>
+
+    <% if member.user_id == 0 %>
+      <div class="media border">
+      <%= image_tag '/assets/offer.png' %>
+      <div class="media-body">
+      <h5>募集中<%= check_box_tag "deletes[#{member.id}]", member.id %></h5>
+      <%= member.part%>
+      </div>
+      </div>
+    <%else%>
+        <% user = User.find(member.user_id) if User.find(member.user_id) %>
+    <div class="media border">
+      <img src=<%= user.image %> alt="" class="img-thumbnail">
+      <div class="media-body">
+      <h5><%=user.name%><%= check_box_tag "deletes[#{member.id}]", member.id %></h5>
+      <%= member.part%>
+      </div>
+    </div>
+    <%end%>
+
+
+
 <% end %>
+  <div class="row">
+  <div class="col"><%= link_to 'キャンセル', @band, class: 'btn btn-info btn-fixed-width' %></div>
+  <div class="col"><%= submit_tag "一括削除", class: "btn btn-danger btn-fixed-width" %></div>
+
+  </div>
+
+<% end %>
+
+    </div>
+</div>

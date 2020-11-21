@@ -92,7 +92,7 @@ class SignIn extends React.Component {
             <div class="action">
           <input
             disabled={this.state.email_error || this.state.password_error}
-            type="submit" name="commit" value="ログイン" class="btn btn-lg btn-warning btn-block" data-disable-with="ログイン" />
+            type="submit" name="commit" value="ログイン" class="btn btn-primary btn-block" data-disable-with="ログイン" />
             </div>
       </form>
     );

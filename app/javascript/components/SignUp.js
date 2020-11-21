@@ -71,7 +71,7 @@ class SignUp extends React.Component {
     this.setState({
       participated_at: inputValue
     });
-    if (inputValue === '') {
+    if (inputValue < 1969 || 2050 < inputValue) {
       this.setState({
         participated_at_error: true,
       });
@@ -136,7 +136,7 @@ class SignUp extends React.Component {
     let participated_atErrorText;
     if (this.state.participated_at_error) {
       participated_atErrorText = (
-        <div class="dynamic_error_message">※入部年度が入力されていません</div>
+        <div class="dynamic_error_message">※正しい入部年度を入力してください</div>
       );
     } else {
       participated_atErrorText = '';
@@ -245,7 +245,7 @@ class SignUp extends React.Component {
         <div class="action">
           <input
             disabled={this.state.email_error || this.state.password_error || this.state.participated_at_error || this.state.password_confirmation_error}
-            type="submit" name="commit" value="登録する" class="btn btn-lg btn-warning btn-block" data-disable-with="登録する" />
+            type="submit" name="commit" value="登録する" class="btn btn-primary btn-block" data-disable-with="登録する" />
         </div>
       </form>
     );

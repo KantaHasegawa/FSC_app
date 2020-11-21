@@ -71,47 +71,75 @@ class Invitation extends React.Component {
         accept-charset="UTF-8"
         method="post"
       >
+        <input type="hidden" name="_method" value="patch"></input>
+
+        {user_dupulicate_error_message}
+
+        <button
+          type="button"
+          disabled={count > 8}
+          onClick={this.handleAddForm}
+          className="btn btn-secondary btn-sm"
+        >
+          メンバーを追加
+        </button>
+        <button
+          type="button"
+          disabled={count < 1}
+          onClick={this.handleDeleteForm}
+          className="btn btn-secondary btn-sm"
+        >
+          メンバーを削除
+        </button>
         <input
           type="hidden"
           name="authenticity_token"
           value={this.props.token}
         ></input>
 
-        <input
-          type="hidden"
-          name="_method"
-          value="patch"
-        ></input>
-
-        {user_dupulicate_error_message}
-
         {this.state.forms.map((form) => (
           <span key={form.toString()}>
             <div className="nested-fields">
-              <label>メンバー名</label>
-              <select
-                onClick={this.handleSelectValidation}
-                name={`band[relationships_attributes][${form}][user_id]`}
-                id={`band[relationships_attributes][${form}][user_id]`}
-              >
-                {this.props.collections.map((collection) => (
-                  <option key={collection[1].toString()} value={collection[1]}>
-                    {collection[0]}
-                  </option>
-                ))}
-              </select>
-              <label>パート</label>
-              <select name={`band[relationships_attributes][${form}][part]`}>
-                <option value="Vocal">Vocal</option>
-                <option value="Guitar&Vocal">Guitar&Vocal</option>
-                <option value="Bass&Vocal">Bass&Vocal</option>
-                <option value="LeadGuitar">LeadGuitar</option>
-                <option value="RhythmGuitar">RhythmGuitar</option>
-                <option value="Bass">Bass</option>
-                <option value="Drums">Drums</option>
-                <option value="Keyboard">Keyboard</option>
-                <option value="その他">その他</option>
-              </select>
+              <div className="row">
+                <div className="col">
+                  {" "}
+                  <label class="label-margin">メンバー名</label>
+                  <select
+                    onClick={this.handleSelectValidation}
+                    name={`band[relationships_attributes][${form}][user_id]`}
+                    id={`band[relationships_attributes][${form}][user_id]`}
+                    className="form-control"
+                  >
+                    {this.props.collections.map((collection) => (
+                      <option
+                        key={collection[1].toString()}
+                        value={collection[1]}
+                      >
+                        {collection[0]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="col">
+                  {" "}
+                  <label class="label-margin">パート</label>
+                  <select
+                    name={`band[relationships_attributes][${form}][part]`}
+                    className="form-control"
+                  >
+                    <option value="Vocal">Vocal</option>
+                    <option value="Guitar&Vocal">Guitar&Vocal</option>
+                    <option value="Bass&Vocal">Bass&Vocal</option>
+                    <option value="LeadGuitar">LeadGuitar</option>
+                    <option value="RhythmGuitar">RhythmGuitar</option>
+                    <option value="Bass">Bass</option>
+                    <option value="Drums">Drums</option>
+                    <option value="Keyboard">Keyboard</option>
+                    <option value="その他">その他</option>
+                  </select>
+                </div>
+              </div>
+
               <input
                 value="false"
                 type="hidden"
@@ -126,16 +154,7 @@ class Invitation extends React.Component {
             </div>
           </span>
         ))}
-        <button type="button" disabled={count > 8} onClick={this.handleAddForm}>
-          メンバーを追加
-        </button>
-        <button
-          type="button"
-          disabled={count < 1}
-          onClick={this.handleDeleteForm}
-        >
-          メンバーを削除
-        </button>
+
         <input
           onClick={this.handleClickSubmit}
           disabled={
@@ -147,7 +166,7 @@ class Invitation extends React.Component {
           name="commit"
           value="確定する"
           data-confirm="本当によろしいですか？"
-          className="btn btn-primary"
+          className="btn btn-primary btn-block"
         ></input>
       </form>
     );

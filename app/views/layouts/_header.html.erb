@@ -1,24 +1,25 @@
-<header class="navbar navbar-default navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <a class="navbar-brand" href="/"></a>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "ホーム",   root_path %></li>
-        <%if user_signed_in? %>
-          <li><%= link_to "プロフィール" ,    current_user %></li>
-          <li><%if unchecked_notifications.any? %>
-              <%= link_to '通知(New)',  notifications_path %>
-            <%else %>
-              <%= link_to '通知',  notifications_path %>
-            <%end %></li>
-          <li><%= link_to "部員",    users_path %></li>
-          <li><%= link_to "バンド",    bands_path %></li>
-          <li><%= link_to "ログアウト" ,      destroy_user_session_path ,method: :delete%></li>
+<nav class="navbar navbar-expand-md">
+  <%= link_to "" , root_path, class: "navbar-brand"%>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#toggler-demo"
+  aria-controls="toggler-demo" aria-expanded="false" aria-label="Toggle navigation" >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="toggler-demo" >
+    <ul class="navbar-nav mr-auto">
+      <% if user_signed_in? %>
+        <li class="nav-item"><%= link_to "プロフィール" ,    current_user, {class: "nav-link"} %></li>
+        <%if unchecked_notifications.any? %>
+          <li class="nav-item"><%= link_to '通知(New)',  notifications_path, {class: "nav-link"} %></li>
         <%else %>
-          <li><%= link_to "ログイン",     new_user_session_path %></li>
-          <li><%= link_to "ユーザー登録",     new_user_registration_path %></li>
+          <li class="nav-item"><%= link_to '通知',  notifications_path, {class: "nav-link"} %></li>
         <%end %>
-      </ul>
-    </nav>
+        <li class="nav-item"><%= link_to "部員",    users_path, {class: "nav-link"} %></li>
+        <li class="nav-item"><%= link_to "バンド",    bands_path, {class: "nav-link"}%></li>
+        <li class="nav-item"><%= link_to "ログアウト" ,      destroy_user_session_path ,method: :delete, class: "nav-link"%></li>
+      <%else %>
+        <li class="nav-item"><%= link_to "ログイン",     new_user_session_path, {class: "nav-link"} %></li>
+        <li class="nav-item"><%= link_to "ユーザー登録",     new_user_registration_path, {class: "nav-link"} %></li>
+      <% end %>
+    </ul>
   </div>
-</header>
+</nav>

@@ -1,8 +1,13 @@
-<div class='emphasis'>通知</div>
+<div class="col">
+    <div class="chase-logo">
+      <h1 class="text-center login-title top-interval">通知</h1>
+    </div>
+    <div class="list-group">
 <%notifications = @notifications.where.not(visitor_id: current_user.id) %>
 <%if notifications.exists? %>
   <%= render notifications %>
   <%= paginate notifications %>
 <%else %>
-  <div class='emphasis'>まだ通知がありません</div>
+  <p class="text-center normal-text ">通知はまだありません</p>
 <%end %>
+</div>

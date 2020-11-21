@@ -54,7 +54,7 @@ class Confirmation extends React.Component {
         <div className="action">
           <input
             disabled={this.state.email_error}
-            type="submit" name="commit" value="送信する" className="btn btn-lg btn-warning btn-block"/>
+            type="submit" name="commit" value="送信する" className="btn  btn-primary btn-block"/>
         </div>
       </form>
     );
