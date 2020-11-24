@@ -3,6 +3,7 @@
     <div class="chase-logo">
       <h1 class="text-center login-title top-interval">認証メールを再送</h1>
       <p class="text-center normal-text ">再送するメールアドレスを入力してください</p>
+      <%= render "devise/shared/error_messages" %>
     </div>
     <%= react_component("Confirmation",token: form_authenticity_token) %>
     <div style="margin-top: 15px"><%= render "devise/shared/links" %></div>

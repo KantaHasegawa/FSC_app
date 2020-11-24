@@ -24,6 +24,8 @@
   margin: .2rem 0rem .2rem 0rem;
 }
 
+
+
 .list-group{
     img{
     width: 35px;
@@ -110,7 +112,7 @@ td{
 
 
 .btn-fixed-width{
-  width: 12rem;
+  width: 9rem;
 }
 
 
@@ -119,6 +121,12 @@ td{
 
 
 /*ナビバー*/
+.nav-item{
+  span{
+    margin-left: 0.2rem;
+  }
+}
+
 .navbar-brand {
   background: url("fsc_logo.png") no-repeat left center;
   background-size: contain;

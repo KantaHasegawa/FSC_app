@@ -21,7 +21,7 @@ class BandsController < ApplicationController
 
   def new
     @band = Band.new
-    @collections = User.pluck(:name, :id).unshift(['募集中', 0])
+
   end
 
   def create
@@ -32,23 +32,14 @@ class BandsController < ApplicationController
       flash[:notice] = 'バンドの登録に成功しました'
     else
       flash[:alert] = 'バンドの登録に失敗しました'
-      redirect_to new_band_path
+      render "new"
     end
   end
 
   def edit
     @band = Band.find(params[:id])
     are_you_member?(@band, current_user)
-    @members = Relationship.where(band_id: @band.id).map do |member|
-      if member.user_id == 0
-        name = "募集中"
-      else
-        name = User.find(member.user_id).name
-      end
-      new_member = member.attributes
-      new_member.store("name", name)
-      new_member
-    end
+
   end
 
   def update
@@ -58,7 +49,7 @@ class BandsController < ApplicationController
       redirect_to @band
       flash[:notice] = 'バンド情報の編集に成功しました'
     else
-      redirect_to edit_band_path
+      render "edit"
       flash[:alert] = 'バンド情報の編集に失敗しました'
     end
   end
@@ -76,14 +67,9 @@ class BandsController < ApplicationController
   def invitation_update
     @band = Band.find(params[:id])
     @band.update(band_params)
-    if @band.save
-      @band.invitation_notification(band_params['relationships_attributes'], current_user)
-      redirect_to @band
-      flash[:notice] = '招待に成功しました'
-    else
-      redirect_to invitation_band_path
-      flash[:alert] = '招待に失敗しました'
-    end
+    @band.invitation_notification(band_params['relationships_attributes'], current_user)
+    redirect_to @band
+    flash[:notice] = '招待に成功しました'
   end
 
   def destroy_member
@@ -94,26 +80,30 @@ class BandsController < ApplicationController
 
   def destroy_member_delete
     @band = Band.find(params[:id])
-    checked_data = params[:deletes].values # ここでcheckされたデータを受け取っています。
-    if Relationship.destroy(checked_data)
-      @band.destroy unless @band.users
-      redirect_to @band
-      flash[:notice] = 'メンバーが存在しないためバンドを削除しました'
+    if params[:deletes].present?
+      checked_data = params[:deletes].values # ここでcheckされたデータを受け取っています。
+      Relationship.destroy(checked_data)
+        if @band.users.empty?
+          @band.destroy
+          redirect_to @band
+          flash[:notice] = 'メンバーが存在しないためバンドを削除しました'
+        else
+          redirect_to  @band
+          flash[:notice] = 'メンバーの削除に成功しました'
+        end
     else
-      redirect_to  @band
-      flash[:notice] = 'メンバーの削除に成功しました'
+      redirect_to destroy_member_band_path
+      flash[:alert] = "削除するメンバーを選択してください"
     end
+
+
   end
 
   def destroy
     @band = Band.find(params[:id])
-    if @band.destroy
+    @band.destroy
       redirect_to bands_path
       flash[:notice] = 'バンドの削除に成功しました'
-    else
-      flash[:alert] = 'バンドの削除に失敗しました'
-      render @band
-    end
   end
 
     def are_you_member?(band,current_user)

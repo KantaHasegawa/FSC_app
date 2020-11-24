@@ -46,13 +46,13 @@
 <p></p>
 <div class="row band-show">
 <div class="col">
-  <%=link_to 'バンド一覧へ戻る', bands_path, class: 'btn btn-info btn-fixed-width' %>
+  <%=link_to 'バンド一覧へ', bands_path, class: 'btn btn-info btn-fixed-width' %>
 </div>
 <%if @users.any? {|v| v.id.to_i == current_user.id} && Relationship.find_by(user_id: current_user.id, band_id: @band.id).permission == true %>
 <div class="col"><%=link_to '編集する', edit_band_path, class: 'btn btn-warning btn-fixed-width' %></div>
-<div class="col"><%=link_to 'メンバーを招待する', invitation_band_path, class: 'btn btn-success btn-fixed-width' %></div>
+<div class="col"><%=link_to 'メンバーを招待', invitation_band_path, class: 'btn btn-success btn-fixed-width' %></div>
 <div class="col">
-  <%=link_to 'メンバーを削除する', destroy_member_band_path, class: 'btn btn-danger btn-fixed-width' %>
+  <%=link_to 'メンバーを削除', destroy_member_band_path, class: 'btn btn-danger btn-fixed-width' %>
 </div>
 
 

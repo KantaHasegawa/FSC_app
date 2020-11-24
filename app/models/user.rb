@@ -19,7 +19,6 @@ class User < ApplicationRecord
   validates :roll, uniqueness: true, if: :leader_uniqueness?
   has_many :relationships, dependent: :destroy
   has_many :bands, through: :relationships
-  has_many :optional_notifications, class_name: 'Notification', foreign_key: 'optional_id', dependent: :destroy
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
   # メソッド

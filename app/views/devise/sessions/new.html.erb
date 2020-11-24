@@ -3,6 +3,7 @@
     <div class="chase-logo">
       <h1 class="text-center login-title top-interval">おかえりなさい！</h1>
       <p class="text-center normal-text ">メールアドレスとパスワードを入力してください</p>
+      <%= render "devise/shared/error_messages" %>
     </div>
     <%= react_component("SignIn", token: form_authenticity_token) %>
     <div style="margin-top: 15px">

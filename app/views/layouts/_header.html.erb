@@ -9,7 +9,11 @@
       <% if user_signed_in? %>
         <li class="nav-item"><%= link_to "プロフィール" ,    current_user, {class: "nav-link"} %></li>
         <%if unchecked_notifications.any? %>
-          <li class="nav-item"><%= link_to '通知(New)',  notifications_path, {class: "nav-link"} %></li>
+          <li class="nav-item">
+          <%= link_to  notifications_path, {class: "nav-link"} do %>
+          通知<span class="badge badge-dark"><%=@notifications.count%></span>
+          </li>
+          <%end%>
         <%else %>
           <li class="nav-item"><%= link_to '通知',  notifications_path, {class: "nav-link"} %></li>
         <%end %>

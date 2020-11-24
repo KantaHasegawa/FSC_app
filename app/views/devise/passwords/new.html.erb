@@ -3,6 +3,7 @@
     <div class="chase-logo">
       <h1 class="text-center login-title top-interval">パスワードが思い出せませんか？</h1>
       <p class="text-center normal-text ">登録したアドレスに変更メールを送ります</p>
+      <%= render "devise/shared/error_messages" %>
     </div>
     <%= react_component("NewPassword",token: form_authenticity_token) %>
     <div style="margin-top: 15px"><%= render "devise/shared/links" %></div>

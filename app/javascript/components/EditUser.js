@@ -144,7 +144,7 @@ class EditUser extends React.Component {
     if (this.state.participated_at_error) {
       participated_atErrorText = (
         <div className="dynamic_error_message">
-          ※入部年度が入力されていません
+          ※正しい入部年度を入力してください
         </div>
       );
     } else {
