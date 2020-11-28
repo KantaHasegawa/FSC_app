@@ -20,7 +20,17 @@ COPY Gemfile.lock /FSC_app/Gemfile.lock
 
 RUN gem install bundler
 RUN bundle install
-
+RUN yarn install
 
 #既存railsプロジェクトをコンテナ内にコピー
 COPY . FSC_app
+
+# puma.sockを配置するディレクトリを作成
+RUN mkdir -p tmp/sockets
+
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+EXPOSE 3000
+
+CMD ["rails", "server", "-b", "0.0.0.0"]
