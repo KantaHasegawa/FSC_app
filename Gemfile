@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
+gem 'rails', '~> 6.1.3.1'
 
 gem 'active_storage_validations', '0.8.9'
 gem 'bcrypt',                     '3.1.13'
@@ -63,6 +63,5 @@ group :test do
 end
 
 group :production do
-  gem 'aws-sdk-s3', '1.46.0', require: false
-  gem 'mysql2'
+  gem 'pg', '1.1.4'
 end

@@ -8,14 +8,13 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
-  socket: '/var/run/mysqld/mysqld.sock'
-  host: db
 
 development:
   <<: *default
   database: fsc_development_DB
-  username: kanta
-  password: kanta
+  username: fsc
+  password: fsc
+  host: localhost
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -23,9 +22,10 @@ development:
 test:
   <<: *default
   database: fsc_test_DB
+  host: localhost
 
 production:
   <<: *default
   database: fsc_production_DB
-  username: kanta
-  password: kanta
+  username: fsc
+  password: fsc
