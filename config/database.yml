@@ -25,7 +25,6 @@ test:
   host: localhost
 
 production:
-  <<: *default
-  database: fsc_production_DB
-  username: fsc
-  password: fsc
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
