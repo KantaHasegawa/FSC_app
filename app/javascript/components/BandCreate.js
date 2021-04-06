@@ -158,7 +158,7 @@ class BandCreate extends React.Component {
                 <div className="col">
                   <label className="label-margin">メンバー名</label>
                   <select
-                    onClick={this.handleSelectValidation}
+                    onChange={this.handleSelectValidation}
                     className="form-control"
                     name={`band[relationships_attributes][${form}][user_id]`}
                     id={`band[relationships_attributes][${form}][user_id]`}
