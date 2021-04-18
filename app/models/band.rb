@@ -2,7 +2,7 @@
 
 class Band < ApplicationRecord
   mount_uploader :image, BandImageUploader
-  validates :name, presence: true, length: { maximum: 30 }, uniqueness: true
+  validates :name, presence: true, length: { maximum: 30 }, uniqueness: { case_sensitive: true }
   has_many :relationships, dependent: :destroy
   has_many :users, through: :relationships
   has_many :notifications, dependent: :destroy
