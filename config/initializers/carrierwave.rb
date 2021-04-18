@@ -1,10 +1,16 @@
+require 'carrierwave/storage/abstract'
+require 'carrierwave/storage/file'
+require 'carrierwave/storage/fog'
+
 CarrierWave.configure do |config|
-  config.fog_provider = 'fog/google'
+  config.storage :fog
+  config.fog_provider = 'fog/aws'
+  config.fog_directory  = 'fsc-manager-image-bucket'
   config.fog_credentials = {
-    provider: 'Google',
-    google_project: ENV['GCS_PROJECT'],
-    google_json_key_string: ENV['GOOGLE_CREDENTIALS']
+    provider: 'AWS',
+    aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+    aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+    region: ENV['AWS_DEFAULT_REGION'],
+    path_style: true
   }
-  config.fog_directory = ENV['GCS_BUCKET']
 end
-CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/

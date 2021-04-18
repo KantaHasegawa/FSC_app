@@ -30,8 +30,7 @@ gem 'react-rails', '2.5.0'
 gem 'sass-rails', '6.0.0'
 gem 'select2-rails'
 gem 'webpacker', '4.2.2'
-gem 'fog-google'
-gem 'google-api-client'
+gem 'fog-aws'
 
 group :development, :test do
   gem 'byebug', '11.1.3', platforms: %i[mri mingw x64_mingw]
