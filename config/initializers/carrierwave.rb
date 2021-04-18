@@ -3,7 +3,7 @@ CarrierWave.configure do |config|
   config.fog_credentials = {
     provider: 'Google',
     google_project: ENV['GCS_PROJECT'],
-    google_json_key_string: ENV['GOOGLE_CREDENTIALS'].as_json
+    google_json_key_string: ENV['GOOGLE_CREDENTIALS']
   }
   config.fog_directory = ENV['GCS_BUCKET']
 end

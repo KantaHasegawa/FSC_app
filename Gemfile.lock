@@ -480,6 +480,7 @@ DEPENDENCIES
   devise-i18n-views
   faker (= 2.11.0)
   fog-google
+  google-api-client
   guard (= 2.16.2)
   guard-minitest (= 2.4.6)
   htmlbeautifier
