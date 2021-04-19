@@ -14,7 +14,7 @@
         <%= f.radio_button :gender_eq, 0 %>男性
         <%= f.radio_button :gender_eq, 1 %>女性 <br>
         <div class="serchBox_m">メインパート</div>
-        <%= f.select :main_part_eq,[["Vo","Vo"],["Gt","Gt"],["Ba","Ba"],["Dr","Dr"],["Key","Key"]],{include_blank: true},class: "form-control"%>
+        <%= f.select :main_part_eq,[["Vocal","Vocal"],["Guitar","Guitar"],["Bass","Bass"],["Drums","Drums"],["Keyboard","Keyboard"]],{include_blank: true},class: "form-control"%>
         <div class="serchBox_m">役職</div>
         <%= f.select :roll_eq,[["平部員","平部員"],["平部長","平部長"],["幹事","幹事"],["会計","会計"],["渉外","渉外"],["機材","機材"],["部長","部長"],["副部長","副部長"],["次期部長","次期部長"],["次期副部長","次期副部長"]],{include_blank: true}, class: "form-control"%>
         <p></p>

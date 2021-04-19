@@ -21,7 +21,7 @@ class Band < ApplicationRecord
           visited_id: visited_user_id,
           relationship_id: Relationship.find_by(band_id: id, user_id: visited_user_id).id,
           action: 'invitation',
-          checked: false
+          # checked: false
         )
         invitation_notification.save if invitation_notification.valid?
       end
@@ -37,7 +37,7 @@ class Band < ApplicationRecord
         visited_id: member.id,
         relationship_id: relationship.id,
         action: 'participated',
-        cheked: false
+        # cheked: false
       )
       participated_notification.save if participated_notification.valid?
     end
