@@ -25,7 +25,5 @@ test:
   host: localhost
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  database: fsc_production_DB
+  <<: *default
+  
