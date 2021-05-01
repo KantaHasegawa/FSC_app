@@ -29,4 +29,5 @@ production:
   database: fsc_production_DB
   username: ENV['DB_USER']
   password: ENV['DB_PASSWORD']
+  socket: /var/run/mysqld/mysqld.sock
   host: ENV['DB_HOST']
